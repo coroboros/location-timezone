@@ -1,6 +1,6 @@
 {
   "name": "@coroboros/location-timezone",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Capital, country, city, ANSI state, and IANA timezone lookups for Node.js.",
   "type": "module",
   "sideEffects": false,
