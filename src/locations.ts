@@ -10,7 +10,7 @@ import {
   locationsByLowerState,
 } from './data/locations.js';
 import { match } from './helpers.js';
-import type { Location } from './interfaces.js';
+import type { Coordinates, Location } from './interfaces.js';
 
 const freezeArray = (arr: Location[]): ReadonlyArray<Location> => {
   Object.freeze(arr);
@@ -26,12 +26,7 @@ export const findLocationsByCoordinates = ({
   latitudeTo,
   longitudeFrom,
   longitudeTo,
-}: {
-  latitudeFrom?: number;
-  latitudeTo?: number;
-  longitudeFrom?: number;
-  longitudeTo?: number;
-}): ReadonlyArray<Location> => {
+}: Coordinates): ReadonlyArray<Location> => {
   const latFromDefined = typeof latitudeFrom === 'number';
   const latToDefined = typeof latitudeTo === 'number';
   const longFromDefined = typeof longitudeFrom === 'number';

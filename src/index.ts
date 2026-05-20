@@ -4,7 +4,7 @@ import * as statesAnsiNs from './states-ansi.js';
 import * as timezonesNs from './timezones.js';
 
 export * from './countries.js';
-export type { Capital, Country, Location, StateAnsi } from './interfaces.js';
+export type { Capital, Coordinates, Country, Location, StateAnsi } from './interfaces.js';
 export * from './locations.js';
 export * from './states-ansi.js';
 export * from './timezones.js';

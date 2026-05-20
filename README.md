@@ -85,7 +85,7 @@ locationTimezone.findStateAnsiByUspsCode('NY');
 
 ## Why this exists
 
-Country, capital, city, ANSI state, and timezone data normally ships in separate npm packages with mismatched cross-references. `@coroboros/location-timezone` consolidates them into one zipson-compressed payload: UN country names, CIA Factbook official forms, ISO 3166-1 codes, ANSI FIPS state codes, IANA timezones, and ~40,000 cities with coordinates. Lookups resolve in O(1) via `Map` and `Set` indexes built once at module load.
+Country, capital, city, ANSI state, and timezone data normally ships in separate npm packages with mismatched cross-references. `@coroboros/location-timezone` consolidates them into one zipson-compressed payload: UN country names, CIA Factbook official forms, ISO 3166-1 codes, ANSI FIPS state codes, IANA timezones, and ~40,000 cities with coordinates. Lookups resolve in O(1) via `Map` and `Set` indexes built once at module load. See [`bench/baseline.md`](bench/baseline.md) for the head-to-head numbers vs the pre-optim linear-scan baseline.
 
 ## Data
 
@@ -104,45 +104,73 @@ Country, capital, city, ANSI state, and timezone data normally ships in separate
 <details>
 <summary><code>Capital</code></summary>
 
-| Property | Type | Notes |
-|---|---|---|
-| `name` | `string` | UTF-8 name. |
+<br>
+
+A country's capital city.
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `name` | `string` | UTF-8 name. Empty string when the country has no capital. |
 | `nameAscii` | `string` | ASCII transliteration. |
 | `latitude` | `number` | Decimal degrees. |
 | `longitude` | `number` | Decimal degrees. |
 | `province` | `string` | |
 | `state` | `string` | USPS code (US only). Empty string otherwise. |
 | `timezone` | `string` | IANA timezone. |
-| `country?` | `Country` | Optional back-reference. |
+| `country?` | [`Country`](#types) | Back-reference. Always present at runtime on capitals returned by the API. |
+
+</details>
+
+<details>
+<summary><code>Coordinates</code></summary>
+
+<br>
+
+Bounding-box bounds for [`findLocationsByCoordinates`](#locations). Pass at least one latitude bound and one longitude bound; missing bounds default to `±Infinity`.
+
+| Property | Type | Default | Description |
+| --- | --- | --- | --- |
+| `latitudeFrom?` | `number` | `Number.NEGATIVE_INFINITY` | Southern latitude bound. |
+| `latitudeTo?` | `number` | `Number.POSITIVE_INFINITY` | Northern latitude bound. |
+| `longitudeFrom?` | `number` | `Number.NEGATIVE_INFINITY` | Western longitude bound. |
+| `longitudeTo?` | `number` | `Number.POSITIVE_INFINITY` | Eastern longitude bound. |
 
 </details>
 
 <details>
 <summary><code>Country</code></summary>
 
-| Property | Type | Notes |
-|---|---|---|
+<br>
+
+A country with ISO codes and IANA timezones.
+
+| Property | Type | Description |
+| --- | --- | --- |
 | `name` | `string` | UN short form. |
 | `officialName` | `string` | UN long form. |
 | `iso2` | `string` | ISO 3166-1 alpha-2. |
 | `iso3` | `string` | ISO 3166-1 alpha-3. |
-| `timezones` | `string[]` | IANA timezones. |
-| `capital?` | `Capital` | Optional back-reference. |
+| `timezones` | `ReadonlyArray<string>` | IANA timezones, sorted ascending. |
+| `capital?` | [`Capital`](#types) | Back-reference. Always present at runtime on countries returned by the API. |
 
 </details>
 
 <details>
 <summary><code>Location</code></summary>
 
-| Property | Type | Notes |
-|---|---|---|
+<br>
+
+A city with coordinates and its country.
+
+| Property | Type | Description |
+| --- | --- | --- |
 | `city` | `string` | UTF-8 name. |
 | `cityAscii` | `string` | ASCII transliteration. |
-| `country` | `Country` | |
+| `country` | [`Country`](#types) | The country it belongs to. |
 | `latitude` | `number` | Decimal degrees. |
 | `longitude` | `number` | Decimal degrees. |
 | `province` | `string` | |
-| `state` | `string` | USPS code (US only). |
+| `state` | `string` | USPS code (US only). Empty string otherwise. |
 | `timezone` | `string` | IANA timezone. |
 
 </details>
@@ -150,11 +178,15 @@ Country, capital, city, ANSI state, and timezone data normally ships in separate
 <details>
 <summary><code>StateAnsi</code></summary>
 
-| Property | Type | Notes |
-|---|---|---|
-| `fipsCode` | `string` | FIPS state code. |
-| `gnisid` | `string` | Geographic Names Information System Identifier. |
-| `name` | `string` | |
+<br>
+
+A US state with ANSI identifiers.
+
+| Property | Type | Description |
+| --- | --- | --- |
+| `fipsCode` | `string` | FIPS state code (2 digits). |
+| `gnisid` | `string` | Geographic Names Information System Identifier (8 digits). |
+| `name` | `string` | State name. |
 | `uspsCode` | `string` | USPS two-letter code. |
 
 </details>
@@ -162,305 +194,704 @@ Country, capital, city, ANSI state, and timezone data normally ships in separate
 ### Capitals and countries
 
 <details>
-<summary><code>findCapitalOfCountryIso(code: string): Capital | undefined</code></summary>
+<summary><code>findCapitalOfCountryIso(code)</code></summary>
 
-Find the capital of a country by ISO 3166-1 alpha-2 or alpha-3 code.
+<br>
 
-| Parameter | Type | Notes |
-|---|---|---|
-| `code` | `string` | Country ISO code, case-insensitive. |
+Find the capital of a country by its ISO 3166-1 alpha-2 or alpha-3 code. Case-insensitive.
 
-</details>
+**Parameters**
 
-<details>
-<summary><code>findCapitalOfCountryName(name: string): Capital | undefined</code></summary>
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `code` | `string` | *(required)* | Country ISO code (alpha-2 or alpha-3). |
 
-Find the capital of a country by short or official name.
+**Returns** — [`Capital`](#types) `| undefined`. The matching capital, or `undefined` when `code` does not resolve.
 
-| Parameter | Type | Notes |
-|---|---|---|
-| `name` | `string` | Country name, case-insensitive. |
+**Examples**
 
-</details>
-
-<details>
-<summary><code>findCountryByCapitalName(name: string): Country | undefined</code></summary>
-
-Find a country by its capital name.
-
-| Parameter | Type | Notes |
-|---|---|---|
-| `name` | `string` | Capital name, UTF-8 or ASCII, case-insensitive. |
+```ts
+findCapitalOfCountryIso('JP');   // → { name: 'Tokyo', ... }
+findCapitalOfCountryIso('jpn');  // → { name: 'Tokyo', ... }
+findCapitalOfCountryIso('XX');   // → undefined
+```
 
 </details>
 
 <details>
-<summary><code>findCountryByIso(code: string): Country | undefined</code></summary>
+<summary><code>findCapitalOfCountryName(name)</code></summary>
 
-Find a country by ISO 3166-1 alpha-2 or alpha-3 code.
+<br>
 
-| Parameter | Type | Notes |
-|---|---|---|
-| `code` | `string` | Country ISO code, case-insensitive. |
+Find the capital of a country by short or official name. Case-insensitive.
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | *(required)* | Country name (UN short form or official form). |
+
+**Returns** — [`Capital`](#types) `| undefined`. The matching capital, or `undefined` when `name` does not resolve.
+
+**Examples**
+
+```ts
+findCapitalOfCountryName('Japan');                            // → { name: 'Tokyo', ... }
+findCapitalOfCountryName('British Indian Ocean Territory');   // → { name: 'Diego Garcia', ... }
+findCapitalOfCountryName('The British Indian Ocean Territory'); // same — official form
+```
 
 </details>
 
 <details>
-<summary><code>findCountryByName(name: string): Country | undefined</code></summary>
+<summary><code>findCountryByCapitalName(name)</code></summary>
 
-Find a country by short or official name.
+<br>
 
-| Parameter | Type | Notes |
-|---|---|---|
-| `name` | `string` | Country name, case-insensitive. |
+Find a country by its capital name (UTF-8 or ASCII). Case-insensitive.
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | *(required)* | Capital name (`Capital.name` or `Capital.nameAscii`). |
+
+**Returns** — [`Country`](#types) `| undefined`. The matching country, or `undefined` when `name` does not resolve.
+
+**Examples**
+
+```ts
+findCountryByCapitalName('Tokyo');         // → { name: 'Japan', ... }
+findCountryByCapitalName('Diego Garcia');  // → { name: 'British Indian Ocean Territory', ... }
+findCountryByCapitalName('');              // → undefined
+```
 
 </details>
 
 <details>
-<summary><code>getCapitals(): Capital[]</code></summary>
+<summary><code>findCountryByIso(code)</code></summary>
+
+<br>
+
+Find a country by ISO 3166-1 alpha-2 or alpha-3 code. Case-insensitive.
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `code` | `string` | *(required)* | Country ISO code (alpha-2 or alpha-3). |
+
+**Returns** — [`Country`](#types) `| undefined`. The matching country, or `undefined` when `code` does not resolve.
+
+**Examples**
+
+```ts
+findCountryByIso('BF');   // → { name: 'Burkina Faso', iso2: 'BF', iso3: 'BFA', ... }
+findCountryByIso('BFA');  // → { name: 'Burkina Faso', ... }
+findCountryByIso('cL');   // → { name: 'Chile', ... } — case-insensitive
+```
+
+</details>
+
+<details>
+<summary><code>findCountryByName(name)</code></summary>
+
+<br>
+
+Find a country by short or official name. Case-insensitive.
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | *(required)* | Country name (`Country.name` or `Country.officialName`). |
+
+**Returns** — [`Country`](#types) `| undefined`. The matching country, or `undefined` when `name` does not resolve.
+
+**Examples**
+
+```ts
+findCountryByName('Costa Rica');                              // → { name: 'Costa Rica', ... }
+findCountryByName('The Republic of Costa Rica');              // same — official form
+findCountryByName('The Territory of Cocos (Keeling) Islands'); // → official form match
+```
+
+</details>
+
+<details>
+<summary><code>getCapitals()</code></summary>
+
+<br>
 
 All country capitals, sorted by country name ascending.
 
+**Returns** — `ReadonlyArray<`[`Capital`](#types)`>`. Frozen — do not mutate.
+
+**Examples**
+
+```ts
+const capitals = getCapitals();
+capitals.length;                  // → number of countries
+capitals.find(c => c.name === 'Tokyo')?.country?.iso2;  // → 'JP'
+```
+
 </details>
 
 <details>
-<summary><code>getCountries(): Country[]</code></summary>
+<summary><code>getCountries()</code></summary>
+
+<br>
 
 All countries, sorted by country name ascending.
 
+**Returns** — `ReadonlyArray<`[`Country`](#types)`>`. Frozen — do not mutate.
+
+**Examples**
+
+```ts
+const countries = getCountries();
+countries.length;                                                   // → ~250
+countries.filter(c => c.timezones.length > 1).length;               // multi-timezone countries
+countries.find(c => c.iso2 === 'US')?.officialName;                 // → 'The United States of America'
+```
+
 </details>
 
 <details>
-<summary><code>getCountryIso2CodeByIso3(iso3: string): string | undefined</code></summary>
+<summary><code>getCountryIso2CodeByIso3(iso3)</code></summary>
 
-Map ISO 3166-1 alpha-3 to alpha-2.
+<br>
 
-| Parameter | Type | Notes |
-|---|---|---|
-| `iso3` | `string` | Alpha-3 code, case-insensitive. |
+Get the ISO 3166-1 alpha-2 code paired with an alpha-3 code. Case-insensitive.
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `iso3` | `string` | *(required)* | Alpha-3 code. |
+
+**Returns** — `string | undefined`. The paired alpha-2 code, or `undefined` when `iso3` is unknown.
+
+**Examples**
+
+```ts
+getCountryIso2CodeByIso3('THA');  // → 'TH'
+getCountryIso2CodeByIso3('USA');  // → 'US'
+getCountryIso2CodeByIso3('XXX');  // → undefined
+```
 
 </details>
 
 <details>
-<summary><code>getCountryIso2Codes(): string[]</code></summary>
+<summary><code>getCountryIso2Codes()</code></summary>
+
+<br>
 
 All ISO 3166-1 alpha-2 codes, sorted ascending.
 
+**Returns** — `ReadonlyArray<string>`. Frozen — do not mutate.
+
+**Examples**
+
+```ts
+const codes = getCountryIso2Codes();
+codes.length;        // → ~250
+codes.includes('JP'); // → true
+codes[0];            // → 'AD'
+```
+
 </details>
 
 <details>
-<summary><code>getCountryIso3CodeByIso2(iso2: string): string | undefined</code></summary>
+<summary><code>getCountryIso3CodeByIso2(iso2)</code></summary>
 
-Map ISO 3166-1 alpha-2 to alpha-3.
+<br>
 
-| Parameter | Type | Notes |
-|---|---|---|
-| `iso2` | `string` | Alpha-2 code, case-insensitive. |
+Get the ISO 3166-1 alpha-3 code paired with an alpha-2 code. Case-insensitive.
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `iso2` | `string` | *(required)* | Alpha-2 code. |
+
+**Returns** — `string | undefined`. The paired alpha-3 code, or `undefined` when `iso2` is unknown.
+
+**Examples**
+
+```ts
+getCountryIso3CodeByIso2('TH');  // → 'THA'
+getCountryIso3CodeByIso2('US');  // → 'USA'
+getCountryIso3CodeByIso2('XX');  // → undefined
+```
 
 </details>
 
 <details>
-<summary><code>getCountryIso3Codes(): string[]</code></summary>
+<summary><code>getCountryIso3Codes()</code></summary>
+
+<br>
 
 All ISO 3166-1 alpha-3 codes, sorted ascending.
 
+**Returns** — `ReadonlyArray<string>`. Frozen — do not mutate.
+
+**Examples**
+
+```ts
+const codes = getCountryIso3Codes();
+codes.length;         // → ~250
+codes.includes('JPN'); // → true
+codes[0];             // → 'AFG'
+```
+
 </details>
 
 <details>
-<summary><code>isValidCountryIso(code: string): { valid: boolean; iso2: boolean; iso3: boolean }</code></summary>
+<summary><code>isValidCountryIso(code)</code></summary>
 
-Validate an ISO 3166-1 alpha-2 or alpha-3 code. **Case-sensitive** — codes must be uppercase.
+<br>
 
-| Parameter | Type | Notes |
-|---|---|---|
-| `code` | `string` | ISO code, case-sensitive. |
+Validate an ISO 3166-1 alpha-2 or alpha-3 code. **Case-sensitive** — codes must be uppercase. The `find*` helpers on this page accept any case.
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `code` | `string` | *(required)* | ISO code, uppercase. |
+
+**Returns** — `{ valid: boolean; iso2: boolean; iso3: boolean }`. `valid` is `true` when `code` resolves; `iso2` / `iso3` discriminates the form.
+
+**Examples**
+
+```ts
+isValidCountryIso('JP');  // → { valid: true,  iso2: true,  iso3: false }
+isValidCountryIso('JPN'); // → { valid: true,  iso2: false, iso3: true  }
+isValidCountryIso('jp');  // → { valid: false, iso2: false, iso3: false } — lowercase rejected
+isValidCountryIso('XX');  // → { valid: false, iso2: false, iso3: false }
+```
 
 </details>
 
 ### Locations
 
 <details>
-<summary><code>findLocationsByCoordinates(coordinates: { latitudeFrom?, latitudeTo?, longitudeFrom?, longitudeTo? }): Location[]</code></summary>
+<summary><code>findLocationsByCoordinates(coordinates)</code></summary>
+
+<br>
 
 Find locations within a bounding box. At least one latitude bound and one longitude bound must be set; missing bounds default to `±Infinity`.
 
-| Parameter | Type | Default |
-|---|---|---|
-| `latitudeFrom?` | `number` | `Number.NEGATIVE_INFINITY` |
-| `latitudeTo?` | `number` | `Number.POSITIVE_INFINITY` |
-| `longitudeFrom?` | `number` | `Number.NEGATIVE_INFINITY` |
-| `longitudeTo?` | `number` | `Number.POSITIVE_INFINITY` |
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `coordinates` | [`Coordinates`](#types) | *(required)* | Bounding-box bounds. See the type for each field. |
+
+**Returns** — `ReadonlyArray<`[`Location`](#types)`>`. Locations within the box, or `[]` when neither latitude bound or neither longitude bound is set.
+
+**Examples**
+
+```ts
+findLocationsByCoordinates({ latitudeFrom: 0, longitudeFrom: 0 });
+// → Location[] — north-east of the equator and the prime meridian
+
+findLocationsByCoordinates({ latitudeFrom: -55, latitudeTo: 1, longitudeFrom: -8, longitudeTo: 5 });
+// → Location[] inside the box
+
+findLocationsByCoordinates({});                             // → []
+```
 
 </details>
 
 <details>
-<summary><code>findLocationsByCountryIso(code: string): Location[]</code></summary>
+<summary><code>findLocationsByCountryIso(code)</code></summary>
 
-Find locations by ISO 3166-1 alpha-2 or alpha-3 code.
+<br>
 
-| Parameter | Type | Notes |
-|---|---|---|
-| `code` | `string` | Country ISO code, case-insensitive. |
+Find locations by country ISO 3166-1 alpha-2 or alpha-3 code. Case-insensitive.
 
-</details>
+**Parameters**
 
-<details>
-<summary><code>findLocationsByCountryName(name: string, partialMatch?: boolean): Location[]</code></summary>
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `code` | `string` | *(required)* | Country ISO code (alpha-2 or alpha-3). |
 
-Find locations by country name.
+**Returns** — `ReadonlyArray<`[`Location`](#types)`>`. Locations in the country, or `[]` when `code` does not resolve.
 
-| Parameter | Type | Default |
-|---|---|---|
-| `name` | `string` | — |
-| `partialMatch?` | `boolean` | `false` |
+**Examples**
 
-</details>
-
-<details>
-<summary><code>findLocationsByProvince(name: string, partialMatch?: boolean): Location[]</code></summary>
-
-Find locations by province. Province data is not exhaustively verified — see [Limitations](#limitations).
-
-| Parameter | Type | Default |
-|---|---|---|
-| `name` | `string` | — |
-| `partialMatch?` | `boolean` | `false` |
+```ts
+findLocationsByCountryIso('JP');   // → Location[] — Japanese cities
+findLocationsByCountryIso('JPN');  // same — alpha-3 works
+findLocationsByCountryIso('XX');   // → []
+```
 
 </details>
 
 <details>
-<summary><code>findLocationsByState(name: string, partialMatch?: boolean): Location[]</code></summary>
+<summary><code>findLocationsByCountryName(name, partialMatch?)</code></summary>
 
-Find locations by USPS state name or code (US only).
+<br>
 
-| Parameter | Type | Default |
-|---|---|---|
-| `name` | `string` | — |
-| `partialMatch?` | `boolean` | `false` |
+Find locations by country short or official name. Case-insensitive.
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | *(required)* | Country name (`Country.name` or `Country.officialName`). |
+| `partialMatch?` | `boolean` | `false` | When `true`, matches names that contain `name` as a substring. |
+
+**Returns** — `ReadonlyArray<`[`Location`](#types)`>`. Matching locations, or `[]` when nothing matches.
+
+**Examples**
+
+```ts
+findLocationsByCountryName('Timor-Leste');                          // → Location[]
+findLocationsByCountryName('The Democratic Republic of Timor-Leste'); // same — official form
+findLocationsByCountryName('timor', true);                          // → Location[] — partial match
+findLocationsByCountryName('timor', false);                         // → []
+```
 
 </details>
 
 <details>
-<summary><code>getLocations(): Location[]</code></summary>
+<summary><code>findLocationsByProvince(name, partialMatch?)</code></summary>
+
+<br>
+
+Find locations by province. Case-insensitive. Province data is not exhaustively verified — see [Limitations](#limitations).
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | *(required)* | Province name. Pass `''` to find locations with no province. |
+| `partialMatch?` | `boolean` | `false` | When `true`, matches provinces that contain `name` as a substring. |
+
+**Returns** — `ReadonlyArray<`[`Location`](#types)`>`. Matching locations, or `[]` when nothing matches.
+
+**Examples**
+
+```ts
+findLocationsByProvince('Tristan da Cunha');     // → Location[]
+findLocationsByProvince('Damascus');             // → Location[]
+findLocationsByProvince('tokel', true);          // → Location[] — partial: 'Tokelau'
+```
+
+</details>
+
+<details>
+<summary><code>findLocationsByState(name, partialMatch?)</code></summary>
+
+<br>
+
+Find locations by USPS state name or code (US only). Case-insensitive.
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | *(required)* | USPS code or state field. Pass `''` to find non-US locations. |
+| `partialMatch?` | `boolean` | `false` | When `true`, matches state fields that contain `name` as a substring. |
+
+**Returns** — `ReadonlyArray<`[`Location`](#types)`>`. Matching locations, or `[]` when nothing matches.
+
+**Examples**
+
+```ts
+findLocationsByState('NY');         // → Location[] — New York
+findLocationsByState('ny');         // same — case-insensitive
+findLocationsByState('x', true);    // → Location[] — partial: 'TX'
+```
+
+</details>
+
+<details>
+<summary><code>getLocations()</code></summary>
+
+<br>
 
 All locations, sorted by city name ascending.
+
+**Returns** — `ReadonlyArray<`[`Location`](#types)`>`. Frozen — do not mutate.
+
+**Examples**
+
+```ts
+const locations = getLocations();
+locations.length;                                       // → ~40,000
+locations.filter(l => l.country.iso2 === 'JP').length;  // Japanese cities
+```
 
 </details>
 
 ### States ANSI
 
 <details>
-<summary><code>findStateAnsiByFipsCode(code: string): StateAnsi | undefined</code></summary>
+<summary><code>findStateAnsiByFipsCode(code)</code></summary>
 
-Find a US state by FIPS code (2 characters).
+<br>
 
-| Parameter | Type | Notes |
-|---|---|---|
-| `code` | `string` | FIPS code, case-insensitive, length 2. |
+Find a US state by its FIPS State Code ANSI.
 
-</details>
+**Parameters**
 
-<details>
-<summary><code>findStateAnsiByGnisid(id: string): StateAnsi | undefined</code></summary>
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `code` | `string` | *(required)* | FIPS code (length 2). |
 
-Find a US state by GNISID.
+**Returns** — [`StateAnsi`](#types) `| undefined`. The matching state, or `undefined` when `code` is not a known FIPS code.
 
-| Parameter | Type | Notes |
-|---|---|---|
-| `id` | `string` | GNISID, case-insensitive. |
+**Examples**
 
-</details>
-
-<details>
-<summary><code>findStateAnsiByName(name: string): StateAnsi | undefined</code></summary>
-
-Find a US state by name.
-
-| Parameter | Type | Notes |
-|---|---|---|
-| `name` | `string` | State name, case-insensitive. |
+```ts
+findStateAnsiByFipsCode('05');   // → { name: 'Arkansas', uspsCode: 'AR', gnisid: '00068085', ... }
+findStateAnsiByFipsCode('99');   // → undefined
+findStateAnsiByFipsCode('');     // → undefined — length 2 required
+```
 
 </details>
 
 <details>
-<summary><code>findStateAnsiByUspsCode(code: string): StateAnsi | undefined</code></summary>
+<summary><code>findStateAnsiByGnisid(id)</code></summary>
 
-Find a US state by USPS code (2 characters).
+<br>
 
-| Parameter | Type | Notes |
-|---|---|---|
-| `code` | `string` | USPS code, case-insensitive, length 2. |
+Find a US state by its GNISID (Geographic Names Information System Identifier).
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `id` | `string` | *(required)* | GNISID (8 digits). |
+
+**Returns** — [`StateAnsi`](#types) `| undefined`. The matching state, or `undefined` when `id` is unknown.
+
+**Examples**
+
+```ts
+findStateAnsiByGnisid('00068085');  // → { name: 'Arkansas', ... }
+findStateAnsiByGnisid('99999999');  // → undefined
+```
 
 </details>
 
 <details>
-<summary><code>getStatesAnsi(): StateAnsi[]</code></summary>
+<summary><code>findStateAnsiByName(name)</code></summary>
+
+<br>
+
+Find a US state by name. Case-insensitive.
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | *(required)* | State name. |
+
+**Returns** — [`StateAnsi`](#types) `| undefined`. The matching state, or `undefined` when `name` does not resolve.
+
+**Examples**
+
+```ts
+findStateAnsiByName('Arkansas');  // → { uspsCode: 'AR', fipsCode: '05', ... }
+findStateAnsiByName('arkansas');  // same — case-insensitive
+findStateAnsiByName('Atlantis');  // → undefined
+```
+
+</details>
+
+<details>
+<summary><code>findStateAnsiByUspsCode(code)</code></summary>
+
+<br>
+
+Find a US state by USPS code. Case-insensitive.
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `code` | `string` | *(required)* | USPS two-letter code. |
+
+**Returns** — [`StateAnsi`](#types) `| undefined`. The matching state, or `undefined` when `code` is not a known USPS code.
+
+**Examples**
+
+```ts
+findStateAnsiByUspsCode('AR');   // → { name: 'Arkansas', fipsCode: '05', ... }
+findStateAnsiByUspsCode('ar');   // same — case-insensitive
+findStateAnsiByUspsCode('ZZ');   // → undefined
+```
+
+</details>
+
+<details>
+<summary><code>getStatesAnsi()</code></summary>
+
+<br>
 
 All US states (ANSI), sorted by name ascending.
+
+**Returns** — `ReadonlyArray<`[`StateAnsi`](#types)`>`. Frozen — do not mutate.
+
+**Examples**
+
+```ts
+const states = getStatesAnsi();
+states.length;                                  // → 56 (50 states + DC + territories)
+states.find(s => s.uspsCode === 'CA')?.name;    // → 'California'
+```
 
 </details>
 
 ### Timezones
 
 <details>
-<summary><code>findTimezoneByCapitalOfCountryIso(code: string): string | undefined</code></summary>
+<summary><code>findTimezoneByCapitalOfCountryIso(code)</code></summary>
 
-IANA timezone for a country's capital, by ISO 3166-1 alpha-2 or alpha-3 code.
+<br>
 
-| Parameter | Type | Notes |
-|---|---|---|
-| `code` | `string` | Country ISO code, case-insensitive. |
+IANA timezone for a country's capital, by ISO 3166-1 alpha-2 or alpha-3 code. Case-insensitive.
 
-</details>
+**Parameters**
 
-<details>
-<summary><code>findTimezoneByCapitalOfCountryName(name: string): string | undefined</code></summary>
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `code` | `string` | *(required)* | Country ISO code (alpha-2 or alpha-3). |
 
-IANA timezone for a country's capital, by country name.
+**Returns** — `string | undefined`. The IANA timezone of the country's capital, or `undefined` when `code` does not resolve.
 
-| Parameter | Type | Notes |
-|---|---|---|
-| `name` | `string` | Country name, case-insensitive. |
+**Examples**
 
-</details>
-
-<details>
-<summary><code>findTimezoneByCityName(name: string): string | undefined</code></summary>
-
-IANA timezone for a city, by name (UTF-8 or ASCII).
-
-| Parameter | Type | Notes |
-|---|---|---|
-| `name` | `string` | City name, case-insensitive. |
+```ts
+findTimezoneByCapitalOfCountryIso('JP');   // → 'Asia/Tokyo'
+findTimezoneByCapitalOfCountryIso('FRA');  // → 'Europe/Paris'
+findTimezoneByCapitalOfCountryIso('XX');   // → undefined
+```
 
 </details>
 
 <details>
-<summary><code>findTimezonesByCountryIso(code: string): string[]</code></summary>
+<summary><code>findTimezoneByCapitalOfCountryName(name)</code></summary>
 
-All IANA timezones for a country, by ISO 3166-1 alpha-2 or alpha-3 code.
+<br>
 
-| Parameter | Type | Notes |
-|---|---|---|
-| `code` | `string` | Country ISO code, case-insensitive. |
+IANA timezone for a country's capital, by country short or official name. Case-insensitive.
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | *(required)* | Country name (`Country.name` or `Country.officialName`). |
+
+**Returns** — `string | undefined`. The IANA timezone of the country's capital, or `undefined` when `name` does not resolve.
+
+**Examples**
+
+```ts
+findTimezoneByCapitalOfCountryName('Japan');                    // → 'Asia/Tokyo'
+findTimezoneByCapitalOfCountryName('The French Republic');      // → 'Europe/Paris'
+findTimezoneByCapitalOfCountryName('Atlantis');                 // → undefined
+```
 
 </details>
 
 <details>
-<summary><code>findTimezonesByCountryName(name: string): string[]</code></summary>
+<summary><code>findTimezoneByCityName(name)</code></summary>
 
-All IANA timezones for a country, by name.
+<br>
 
-| Parameter | Type | Notes |
-|---|---|---|
-| `name` | `string` | Country name, case-insensitive. |
+IANA timezone for a city, by name (UTF-8 or ASCII). Case-insensitive.
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | *(required)* | City name. |
+
+**Returns** — `string | undefined`. The IANA timezone of the matching city, or `undefined` when `name` is empty or does not resolve.
+
+**Examples**
+
+```ts
+findTimezoneByCityName('Tokyo');     // → 'Asia/Tokyo'
+findTimezoneByCityName('Göteborg');  // → 'Europe/Stockholm'
+findTimezoneByCityName('Goteborg');  // same — ASCII transliteration works too
+findTimezoneByCityName('');          // → undefined
+```
 
 </details>
 
 <details>
-<summary><code>getTimezones(): string[]</code></summary>
+<summary><code>findTimezonesByCountryIso(code)</code></summary>
+
+<br>
+
+All IANA timezones for a country, by ISO 3166-1 alpha-2 or alpha-3 code. Case-insensitive.
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `code` | `string` | *(required)* | Country ISO code (alpha-2 or alpha-3). |
+
+**Returns** — `ReadonlyArray<string>`. The country's timezones, or `[]` when `code` does not resolve. Frozen — do not mutate.
+
+**Examples**
+
+```ts
+findTimezonesByCountryIso('US');   // → ['America/Adak', 'America/Anchorage', ...]
+findTimezonesByCountryIso('JPN');  // → ['Asia/Tokyo']
+findTimezonesByCountryIso('XX');   // → []
+```
+
+</details>
+
+<details>
+<summary><code>findTimezonesByCountryName(name)</code></summary>
+
+<br>
+
+All IANA timezones for a country, by short or official name. Case-insensitive.
+
+**Parameters**
+
+| Option | Type | Default | Description |
+| --- | --- | --- | --- |
+| `name` | `string` | *(required)* | Country name (`Country.name` or `Country.officialName`). |
+
+**Returns** — `ReadonlyArray<string>`. The country's timezones, or `[]` when `name` does not resolve. Frozen — do not mutate.
+
+**Examples**
+
+```ts
+findTimezonesByCountryName('United States of America');         // → ['America/Adak', ...]
+findTimezonesByCountryName('The United States of America');     // same — official form
+findTimezonesByCountryName('Atlantis');                          // → []
+```
+
+</details>
+
+<details>
+<summary><code>getTimezones()</code></summary>
+
+<br>
 
 All IANA timezones (the subset returned by `Intl.supportedValuesOf('timeZone')` at data-build time), sorted ascending.
+
+**Returns** — `ReadonlyArray<string>`. Frozen — do not mutate.
+
+**Examples**
+
+```ts
+const timezones = getTimezones();
+timezones.length;                       // → ~430
+timezones.includes('Asia/Tokyo');       // → true
+timezones[0];                           // → 'Africa/Abidjan'
+```
 
 </details>
 
