@@ -1,0 +1,1724 @@
+[
+  {
+    "country": "Afghanistan",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Kabul",
+    "timezone": "Asia/Kabul"
+  },
+  {
+    "country": "Albania",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Tirana",
+    "timezone": ""
+  },
+  {
+    "country": "Algeria",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Algiers",
+    "timezone": ""
+  },
+  {
+    "country": "American Samoa",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Pago Pago",
+    "timezone": ""
+  },
+  {
+    "country": "Andorra",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Andorra la Vella",
+    "timezone": ""
+  },
+  {
+    "country": "Angola",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Luanda",
+    "timezone": ""
+  },
+  {
+    "country": "Anguilla",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "The Valley",
+    "timezone": ""
+  },
+  {
+    "country": "Antarctica",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "King George Island",
+    "timezone": ""
+  },
+  {
+    "country": "Antigua and Barbuda",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Saint John's",
+    "timezone": ""
+  },
+  {
+    "country": "Argentina",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Buenos Aires",
+    "timezone": ""
+  },
+  {
+    "country": "Armenia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Yerevan",
+    "timezone": ""
+  },
+  {
+    "country": "Aruba",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Oranjestad",
+    "timezone": ""
+  },
+  {
+    "country": "Australia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Canberra",
+    "timezone": ""
+  },
+  {
+    "country": "Austria",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Vienna",
+    "timezone": ""
+  },
+  {
+    "country": "Azerbaijan",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Baku",
+    "timezone": ""
+  },
+  {
+    "country": "Bahamas",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Nassau",
+    "timezone": ""
+  },
+  {
+    "country": "Bahrain",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Manama",
+    "timezone": ""
+  },
+  {
+    "country": "Bangladesh",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Dhaka",
+    "timezone": ""
+  },
+  {
+    "country": "Barbados",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Bridgetown",
+    "timezone": ""
+  },
+  {
+    "country": "Belarus",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Minsk",
+    "timezone": ""
+  },
+  {
+    "country": "Belgium",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Brussels",
+    "timezone": ""
+  },
+  {
+    "country": "Belize",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Belmopan",
+    "timezone": ""
+  },
+  {
+    "country": "Benin",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Porto-Novo",
+    "timezone": ""
+  },
+  {
+    "country": "Bermuda",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Hamilton",
+    "timezone": ""
+  },
+  {
+    "country": "Bhutan",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Thimphu",
+    "timezone": ""
+  },
+  {
+    "country": "Bolivia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "La Paz",
+    "timezone": ""
+  },
+  {
+    "country": "Bosnia and Herzegovina",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Sarajevo",
+    "timezone": ""
+  },
+  {
+    "country": "Botswana",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Gaborone",
+    "timezone": ""
+  },
+  {
+    "country": "Brazil",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Brasília",
+    "timezone": ""
+  },
+  {
+    "country": "Brunei Darussalam",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Bandar Seri Begawan",
+    "timezone": ""
+  },
+  {
+    "country": "Bulgaria",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Sofia",
+    "timezone": ""
+  },
+  {
+    "country": "Burkina Faso",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Ouagadougou",
+    "timezone": ""
+  },
+  {
+    "country": "Burundi",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Bujumbura",
+    "timezone": ""
+  },
+  {
+    "country": "Cambodia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Phnom Penh",
+    "timezone": ""
+  },
+  {
+    "country": "Cameroon",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Yaoundé",
+    "timezone": ""
+  },
+  {
+    "country": "Canada",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Ottawa",
+    "timezone": ""
+  },
+  {
+    "country": "Cabo Verde",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Praia",
+    "timezone": ""
+  },
+  {
+    "country": "Cayman Islands",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "George Town",
+    "timezone": ""
+  },
+  {
+    "country": "Central African Republic",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Bangui",
+    "timezone": ""
+  },
+  {
+    "country": "Chad",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "N'Djamena",
+    "timezone": ""
+  },
+  {
+    "country": "Chile",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Santiago",
+    "timezone": ""
+  },
+  {
+    "country": "China",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Beijing",
+    "timezone": ""
+  },
+  {
+    "country": "Colombia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Bogotá",
+    "timezone": ""
+  },
+  {
+    "country": "Comoros",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Moroni",
+    "timezone": ""
+  },
+  {
+    "country": "Cook Islands",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Avarua",
+    "timezone": ""
+  },
+  {
+    "country": "Costa Rica",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "San José",
+    "timezone": ""
+  },
+  {
+    "country": "Croatia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Zagreb",
+    "timezone": ""
+  },
+  {
+    "country": "Cuba",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Havana",
+    "timezone": ""
+  },
+  {
+    "country": "Cyprus",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Nicosia",
+    "timezone": ""
+  },
+  {
+    "country": "Czechia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Prague",
+    "timezone": ""
+  },
+  {
+    "country": "Denmark",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Copenhagen",
+    "timezone": ""
+  },
+  {
+    "country": "Djibouti",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Djibouti",
+    "timezone": ""
+  },
+  {
+    "country": "Dominica",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Roseau",
+    "timezone": ""
+  },
+  {
+    "country": "Dominican Republic",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Santo Domingo",
+    "timezone": ""
+  },
+  {
+    "country": "Timor-Leste",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Dili",
+    "timezone": ""
+  },
+  {
+    "country": "Ecuador",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Quito",
+    "timezone": ""
+  },
+  {
+    "country": "Egypt",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Cairo",
+    "timezone": ""
+  },
+  {
+    "country": "El Salvador",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "San Salvador",
+    "timezone": ""
+  },
+  {
+    "country": "United Kingdom of Great Britain and Northern Ireland",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "London",
+    "timezone": ""
+  },
+  {
+    "country": "Equatorial Guinea",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Malabo",
+    "timezone": ""
+  },
+  {
+    "country": "Eritrea",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Asmara",
+    "timezone": ""
+  },
+  {
+    "country": "Estonia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Tallinn",
+    "timezone": ""
+  },
+  {
+    "country": "Ethiopia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Addis Ababa",
+    "timezone": ""
+  },
+  {
+    "country": "Falkland Islands",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Stanley",
+    "timezone": ""
+  },
+  {
+    "country": "Faroe Islands",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Tórshavn",
+    "timezone": ""
+  },
+  {
+    "country": "Fiji",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Suva",
+    "timezone": ""
+  },
+  {
+    "country": "Finland",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Helsinki",
+    "timezone": ""
+  },
+  {
+    "country": "France",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Paris",
+    "timezone": ""
+  },
+  {
+    "country": "French Guiana",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Cayenne",
+    "timezone": ""
+  },
+  {
+    "country": "French Polynesia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Papeete",
+    "timezone": ""
+  },
+  {
+    "country": "French Southern Territories",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Saint-Pierre",
+    "timezone": ""
+  },
+  {
+    "country": "Gabon",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Libreville",
+    "timezone": ""
+  },
+  {
+    "country": "Gambia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Banjul",
+    "timezone": ""
+  },
+  {
+    "country": "Georgia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Tbilisi",
+    "timezone": ""
+  },
+  {
+    "country": "Germany",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Berlin",
+    "timezone": ""
+  },
+  {
+    "country": "Ghana",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Accra",
+    "timezone": ""
+  },
+  {
+    "country": "Gibraltar",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Gibraltar",
+    "timezone": ""
+  },
+  {
+    "country": "Greece",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Athens",
+    "timezone": ""
+  },
+  {
+    "country": "Greenland",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Nuuk",
+    "timezone": ""
+  },
+  {
+    "country": "Grenada",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Saint George's",
+    "timezone": ""
+  },
+  {
+    "country": "Guadeloupe",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Basse-Terre",
+    "timezone": ""
+  },
+  {
+    "country": "Guam",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Hagåtña",
+    "timezone": ""
+  },
+  {
+    "country": "Guatemala",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Guatemala City",
+    "timezone": ""
+  },
+  {
+    "country": "Guinea",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Conakry",
+    "timezone": ""
+  },
+  {
+    "country": "Guinea-Bissau",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Bissau",
+    "timezone": ""
+  },
+  {
+    "country": "Guyana",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Georgetown",
+    "timezone": ""
+  },
+  {
+    "country": "Haiti",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Port-au-Prince",
+    "timezone": ""
+  },
+  {
+    "country": "Holy See",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Vatican City",
+    "timezone": ""
+  },
+  {
+    "country": "Honduras",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Tegucigalpa",
+    "timezone": ""
+  },
+  {
+    "country": "Hong Kong",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Hong Kong",
+    "timezone": ""
+  },
+  {
+    "country": "Hungary",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Budapest",
+    "timezone": ""
+  },
+  {
+    "country": "Iceland",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Reykjavík",
+    "timezone": ""
+  },
+  {
+    "country": "India",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "New Delhi",
+    "timezone": ""
+  },
+  {
+    "country": "Indonesia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Jakarta",
+    "timezone": ""
+  },
+  {
+    "country": "Iran",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Tehran",
+    "timezone": ""
+  },
+  {
+    "country": "Iraq",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Baghdad",
+    "timezone": ""
+  },
+  {
+    "country": "Ireland",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Dublin",
+    "timezone": ""
+  },
+  {
+    "country": "Israel",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Jerusalem",
+    "timezone": ""
+  },
+  {
+    "country": "Italy",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Rome",
+    "timezone": ""
+  },
+  {
+    "country": "Côte d'Ivoire",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Yamoussoukro",
+    "timezone": ""
+  },
+  {
+    "country": "Jamaica",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Kingston",
+    "timezone": ""
+  },
+  {
+    "country": "Japan",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Tokyo",
+    "timezone": ""
+  },
+  {
+    "country": "Jordan",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Amman",
+    "timezone": ""
+  },
+  {
+    "country": "Kazakhstan",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Astana",
+    "timezone": ""
+  },
+  {
+    "country": "Kenya",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Nairobi",
+    "timezone": ""
+  },
+  {
+    "country": "Kiribati",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Tarawa",
+    "timezone": ""
+  },
+  {
+    "country": "Kuwait",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Kuwait",
+    "timezone": ""
+  },
+  {
+    "country": "Kyrgyzstan",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Bishkek",
+    "timezone": ""
+  },
+  {
+    "country": "Lao People's Democratic Republic",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Vientiane",
+    "timezone": ""
+  },
+  {
+    "country": "Latvia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Riga",
+    "timezone": ""
+  },
+  {
+    "country": "Lebanon",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Beirut",
+    "timezone": ""
+  },
+  {
+    "country": "Lesotho",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Maseru",
+    "timezone": ""
+  },
+  {
+    "country": "Liberia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Monrovia",
+    "timezone": ""
+  },
+  {
+    "country": "Libya",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Tripoli",
+    "timezone": ""
+  },
+  {
+    "country": "Liechtenstein",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Vaduz",
+    "timezone": ""
+  },
+  {
+    "country": "Lithuania",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Vilnius",
+    "timezone": ""
+  },
+  {
+    "country": "Luxembourg",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Luxembourg",
+    "timezone": ""
+  },
+  {
+    "country": "Macau",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Macau",
+    "timezone": ""
+  },
+  {
+    "country": "North Macedonia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Skopje",
+    "timezone": ""
+  },
+  {
+    "country": "Madagascar",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Antananarivo",
+    "timezone": ""
+  },
+  {
+    "country": "Malawi",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Lilongwe",
+    "timezone": ""
+  },
+  {
+    "country": "Malaysia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Kuala Lumpur",
+    "timezone": ""
+  },
+  {
+    "country": "Maldives",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Male",
+    "timezone": ""
+  },
+  {
+    "country": "Mali",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Bamako",
+    "timezone": ""
+  },
+  {
+    "country": "Malta",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Valletta",
+    "timezone": ""
+  },
+  {
+    "country": "Marshall Islands",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Majuro",
+    "timezone": ""
+  },
+  {
+    "country": "Martinique",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Fort-de-France",
+    "timezone": ""
+  },
+  {
+    "country": "Mauritania",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Nouakchott",
+    "timezone": ""
+  },
+  {
+    "country": "Mauritius",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Port Louis",
+    "timezone": ""
+  },
+  {
+    "country": "Mayotte",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Mamoudzou",
+    "timezone": ""
+  },
+  {
+    "country": "Mexico",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Mexico City",
+    "timezone": ""
+  },
+  {
+    "country": "Micronesia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Palikir",
+    "timezone": ""
+  },
+  {
+    "country": "Republic of Moldova",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Chisinau",
+    "timezone": ""
+  },
+  {
+    "country": "Monaco",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Monaco",
+    "timezone": ""
+  },
+  {
+    "country": "Mongolia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Ulaanbaatar",
+    "timezone": ""
+  },
+  {
+    "country": "Montserrat",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Plymouth",
+    "timezone": ""
+  },
+  {
+    "country": "Morocco",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Rabat",
+    "timezone": ""
+  },
+  {
+    "country": "Mozambique",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Maputo",
+    "timezone": ""
+  },
+  {
+    "country": "Myanmar",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Naypyidaw",
+    "timezone": ""
+  },
+  {
+    "country": "Namibia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Windhoek",
+    "timezone": ""
+  },
+  {
+    "country": "Nauru",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Yaren",
+    "timezone": ""
+  },
+  {
+    "country": "Nepal",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Kathmandu",
+    "timezone": ""
+  },
+  {
+    "country": "Netherlands",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Amsterdam",
+    "timezone": ""
+  },
+  {
+    "country": "Curaçao",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Willemstad",
+    "timezone": ""
+  },
+  {
+    "country": "New Caledonia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Nouméa",
+    "timezone": ""
+  },
+  {
+    "country": "New Zealand",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Wellington",
+    "timezone": ""
+  },
+  {
+    "country": "Nicaragua",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Managua",
+    "timezone": ""
+  },
+  {
+    "country": "Niger",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Niamey",
+    "timezone": ""
+  },
+  {
+    "country": "Nigeria",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Abuja",
+    "timezone": ""
+  },
+  {
+    "country": "Niue",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Alofi",
+    "timezone": ""
+  },
+  {
+    "country": "Norfolk Island",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Kingston",
+    "timezone": ""
+  },
+  {
+    "country": "Democratic People's Republic of Korea",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Pyongyang",
+    "timezone": ""
+  },
+  {
+    "country": "Northern Mariana Islands",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Saipan",
+    "timezone": ""
+  },
+  {
+    "country": "Norway",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Oslo",
+    "timezone": ""
+  },
+  {
+    "country": "Oman",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Muscat",
+    "timezone": ""
+  },
+  {
+    "country": "Pakistan",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Islamabad",
+    "timezone": ""
+  },
+  {
+    "country": "Palau",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Koror",
+    "timezone": ""
+  },
+  {
+    "country": "State of Palestine",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Gaza",
+    "timezone": ""
+  },
+  {
+    "country": "Panama",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Panama City",
+    "timezone": ""
+  },
+  {
+    "country": "Papua New Guinea",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Port Moresby",
+    "timezone": ""
+  },
+  {
+    "country": "Paraguay",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Asunción",
+    "timezone": ""
+  },
+  {
+    "country": "Peru",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Lima",
+    "timezone": ""
+  },
+  {
+    "country": "Philippines",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Manila",
+    "timezone": ""
+  },
+  {
+    "country": "Pitcairn",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Adamstown",
+    "timezone": ""
+  },
+  {
+    "country": "Poland",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Warsaw",
+    "timezone": ""
+  },
+  {
+    "country": "Portugal",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Lisbon",
+    "timezone": ""
+  },
+  {
+    "country": "Puerto Rico",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "San Juan",
+    "timezone": ""
+  },
+  {
+    "country": "Qatar",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Doha",
+    "timezone": ""
+  },
+  {
+    "country": "Réunion",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Saint-Denis",
+    "timezone": ""
+  },
+  {
+    "country": "Romania",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Bucharest",
+    "timezone": ""
+  },
+  {
+    "country": "Russian Federation",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Moscow",
+    "timezone": ""
+  },
+  {
+    "country": "Rwanda",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Kigali",
+    "timezone": ""
+  },
+  {
+    "country": "Saint Helena",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Jamestown",
+    "timezone": ""
+  },
+  {
+    "country": "Saint Kitts and Nevis",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Basseterre",
+    "timezone": ""
+  },
+  {
+    "country": "Saint Lucia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Castries",
+    "timezone": ""
+  },
+  {
+    "country": "Saint Pierre and Miquelon",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Saint-Pierre",
+    "timezone": ""
+  },
+  {
+    "country": "Saint Vincent and the Grenadines",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Kingstown",
+    "timezone": ""
+  },
+  {
+    "country": "Samoa",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Apia",
+    "timezone": ""
+  },
+  {
+    "country": "San Marino",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "San Marino",
+    "timezone": ""
+  },
+  {
+    "country": "Sao Tome and Principe",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "São Tomé",
+    "timezone": ""
+  },
+  {
+    "country": "Saudi Arabia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Riyadh",
+    "timezone": ""
+  },
+  {
+    "country": "Senegal",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Dakar",
+    "timezone": ""
+  },
+  {
+    "country": "Seychelles",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Victoria",
+    "timezone": ""
+  },
+  {
+    "country": "Sierra Leone",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Freetown",
+    "timezone": ""
+  },
+  {
+    "country": "Singapore",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Singapore",
+    "timezone": ""
+  },
+  {
+    "country": "Slovakia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Bratislava",
+    "timezone": ""
+  },
+  {
+    "country": "Slovenia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Ljubljana",
+    "timezone": ""
+  },
+  {
+    "country": "Solomon Islands",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Honiara",
+    "timezone": ""
+  },
+  {
+    "country": "Somalia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Mogadishu",
+    "timezone": ""
+  },
+  {
+    "country": "South Africa",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Pretoria",
+    "timezone": ""
+  },
+  {
+    "country": "South Georgia and the South Sandwich Islands",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "King Edward Point",
+    "timezone": ""
+  },
+  {
+    "country": "Republic of Korea",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Seoul",
+    "timezone": ""
+  },
+  {
+    "country": "South Sudan",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Juba",
+    "timezone": ""
+  },
+  {
+    "country": "Spain",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Madrid",
+    "timezone": ""
+  },
+  {
+    "country": "Sri Lanka",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Sri Jayawardenepura Kotte",
+    "timezone": ""
+  },
+  {
+    "country": "Sudan",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Khartoum",
+    "timezone": ""
+  },
+  {
+    "country": "Suriname",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Paramaribo",
+    "timezone": ""
+  },
+  {
+    "country": "Svalbard and Jan Mayen",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Longyearbyen",
+    "timezone": ""
+  },
+  {
+    "country": "Eswatini",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Mbabane",
+    "timezone": ""
+  },
+  {
+    "country": "Sweden",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Stockholm",
+    "timezone": ""
+  },
+  {
+    "country": "Switzerland",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Bern",
+    "timezone": ""
+  },
+  {
+    "country": "Syrian Arab Republic",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Damascus",
+    "timezone": ""
+  },
+  {
+    "country": "Tajikistan",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Dushanbe",
+    "timezone": ""
+  },
+  {
+    "country": "United Republic of Tanzania",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Dodoma",
+    "timezone": ""
+  },
+  {
+    "country": "Thailand",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Bangkok",
+    "timezone": ""
+  },
+  {
+    "country": "Democratic Republic of the Congo",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Kinshasa",
+    "timezone": ""
+  },
+  {
+    "country": "Congo",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Brazzaville",
+    "timezone": ""
+  },
+  {
+    "country": "Togo",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Lomé",
+    "timezone": ""
+  },
+  {
+    "country": "Tokelau",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Fakaofo",
+    "timezone": ""
+  },
+  {
+    "country": "Tonga",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Nuku'alofa",
+    "timezone": ""
+  },
+  {
+    "country": "Trinidad and Tobago",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Port-of-Spain",
+    "timezone": ""
+  },
+  {
+    "country": "Tunisia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Tunis",
+    "timezone": ""
+  },
+  {
+    "country": "Türkiye",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Ankara",
+    "timezone": ""
+  },
+  {
+    "country": "Turkmenistan",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Ashgabat",
+    "timezone": ""
+  },
+  {
+    "country": "Turks and Caicos Islands",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Cockburn Town",
+    "timezone": ""
+  },
+  {
+    "country": "Tuvalu",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Funafuti",
+    "timezone": ""
+  },
+  {
+    "country": "Uganda",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Kampala",
+    "timezone": ""
+  },
+  {
+    "country": "Ukraine",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Kyiv",
+    "timezone": ""
+  },
+  {
+    "country": "United Arab Emirates",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Abu Dhabi",
+    "timezone": ""
+  },
+  {
+    "country": "United States of America",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Washington, D.C.",
+    "timezone": ""
+  },
+  {
+    "country": "U.S. Minor Outlying Islands",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "",
+    "timezone": ""
+  },
+  {
+    "country": "Uruguay",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Montevideo",
+    "timezone": ""
+  },
+  {
+    "country": "Uzbekistan",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Tashkent",
+    "timezone": ""
+  },
+  {
+    "country": "Vanuatu",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Port-Vila",
+    "timezone": ""
+  },
+  {
+    "country": "Venezuela",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Caracas",
+    "timezone": ""
+  },
+  {
+    "country": "Viet Nam",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Hanoi",
+    "timezone": ""
+  },
+  {
+    "country": "British Virgin Islands",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Road Town",
+    "timezone": ""
+  },
+  {
+    "country": "U.S. Virgin Islands",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Charlotte Amalie",
+    "timezone": ""
+  },
+  {
+    "country": "Wallis and Futuna",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Matā'utu",
+    "timezone": ""
+  },
+  {
+    "country": "Western Sahara",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Laayoune",
+    "timezone": ""
+  },
+  {
+    "country": "Yemen",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Sanaa",
+    "timezone": ""
+  },
+  {
+    "country": "Zambia",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Lusaka",
+    "timezone": ""
+  },
+  {
+    "country": "Zimbabwe",
+    "countryIso2": "",
+    "countryIso3": "",
+    "capital": "Harare",
+    "timezone": ""
+  }, {
+    "country": "Åland Islands",
+    "capital": "Mariehamn"
+  },
+  {
+    "country": "Isle of Man",
+    "capital": "Douglas"
+  },
+  {
+    "country": "Kosovo",
+    "capital": "Pristina"
+  },
+  {
+    "country": "Montenegro",
+    "capital": "Podgorica"
+  },
+  {
+    "country": "Northern Cyprus",
+    "capital": "North Nicosia"
+  },
+  {
+    "country": "Serbia",
+    "capital": "Belgrade"
+  },
+  {
+    "country": "Somaliland",
+    "capital": "Hargeisa"
+  },
+  {
+    "country": "Taiwan",
+    "capital": "Taipei City"
+  },
+  {
+    "country": "Saint Barthélemy",
+    "capital": "Gustavia"
+  },
+  {
+    "country": "Saint Martin",
+    "capital": "Marigot"
+  },
+  {
+    "country": "Bonaire",
+    "capital": "Kralendijk"
+  },
+  {
+    "country": "Sint Eustatius",
+    "capital": "Oranjestad"
+  },
+  {
+    "country": "Saba",
+    "capital": "The Bottom"
+  },
+  {
+    "country": "Bouvet Island",
+    "capital": ""
+  },
+  {
+    "country": "Cocos (Keeling) Islands",
+    "capital": "West Island"
+  },
+  {
+    "country": "Christmas Island",
+    "capital": "Flying Fish Cove"
+  },
+  {
+    "country": "Guernsey",
+    "capital": "Saint Peter Port"
+  },
+  {
+    "country": "Heard Island and McDonald Islands",
+    "capital": ""
+  },
+  {
+    "country": "British Indian Ocean Territory",
+    "capital": "Diego Garcia"
+  },
+  {
+    "country": "Jersey",
+    "capital": "Saint Helier"
+  },
+  {
+    "country": "Tristan da Cunha",
+    "capital": "Edinburgh of the Seven Seas"
+  },
+  {
+    "country": "Ascension Island",
+    "capital": "Georgetown"
+  },
+  {
+    "country": "Sint Maarten",
+    "capital": "Philipsburg"
+  }
+]
