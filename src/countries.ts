@@ -34,7 +34,7 @@ export const findCapitalOfCountryIso = function findCapitalOfCountryIso(
 
   return countryCapitals.find((capital) =>
     match({
-      source: capital.country![alphaType],
+      source: capital.country[alphaType],
       compare: code,
       partial: false,
       strict: false,
@@ -58,13 +58,13 @@ export const findCapitalOfCountryName = function findCapitalOfCountryName(
   return countryCapitals.find(
     (capital) =>
       match({
-        source: capital.country!.name,
+        source: capital.country.name,
         compare: name,
         partial: false,
         strict: false,
       }) ||
       match({
-        source: capital.country!.officialName,
+        source: capital.country.officialName,
         compare: name,
         partial: false,
         strict: false,
@@ -88,13 +88,13 @@ export const findCountryByCapitalName = function findCountryByCapitalName(
   return countries.find(
     (country) =>
       match({
-        source: country.capital!.name,
+        source: country.capital.name,
         compare: name,
         partial: false,
         strict: false,
       }) ||
       match({
-        source: country.capital!.nameAscii,
+        source: country.capital.nameAscii,
         compare: name,
         partial: false,
         strict: false,

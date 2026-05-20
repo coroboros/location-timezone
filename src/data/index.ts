@@ -10,8 +10,16 @@ import locationsJson from './locations.json' with { type: 'json' };
 import statesAnsiJson from './states-ansi.json' with { type: 'json' };
 import timezonesJson from './timezones.json' with { type: 'json' };
 
-export const countries = parse(countriesJson.data) as Country[];
-export const countryCapitals = parse(countryCapitalsJson.data) as Capital[];
+interface CapitalWithCountry extends Capital {
+  country: Country;
+}
+
+interface CountryWithCapital extends Country {
+  capital: Capital;
+}
+
+export const countries = parse(countriesJson.data) as CountryWithCapital[];
+export const countryCapitals = parse(countryCapitalsJson.data) as CapitalWithCountry[];
 export const countryIso2ByIso3Codes = parse(countryIso2ByIso3CodesJson.data) as Record<
   string,
   string

@@ -25,7 +25,7 @@ export const findTimezoneByCapitalOfCountryIso = function findTimezoneByCapitalO
   const alphaType = iso2 ? 'iso2' : 'iso3';
   return countryCapitals.find((capital) =>
     match({
-      source: capital.country![alphaType],
+      source: capital.country[alphaType],
       compare: countryCode,
       partial: false,
       strict: true,
@@ -50,13 +50,13 @@ export const findTimezoneByCapitalOfCountryName = function findTimezoneByCapital
   return countryCapitals.find(
     (capital) =>
       match({
-        source: capital.country!.name,
+        source: capital.country.name,
         compare: name,
         partial: false,
         strict: false,
       }) ||
       match({
-        source: capital.country!.officialName,
+        source: capital.country.officialName,
         compare: name,
         partial: false,
         strict: false,
