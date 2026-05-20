@@ -68,7 +68,7 @@
   ],
   "scripts": {
     "build": "tsdown",
-    "build:data": "node scripts/clean-and-generate.js",
+    "build:data": "tsx scripts/clean-and-generate.ts",
     "bench": "pnpm build && node bench/location-timezone.bench.mjs",
     "dev": "tsdown --watch",
     "lint": "biome check .",

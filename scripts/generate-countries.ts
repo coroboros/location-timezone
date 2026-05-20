@@ -1,10 +1,11 @@
 // From the United Nations: https://unterm.un.org/unterm2/en/country
 // and the World Factbook: https://www.cia.gov/the-world-factbook/
-const { readFileSync, writeFileSync } = require('fs');
+import { readFileSync, writeFileSync } from 'node:fs';
+import path from 'node:path';
 
-const exists = (thing) => !(thing === undefined || thing === null || Number.isNaN(thing));
+const __dirname = import.meta.dirname;
 
-const missingCountries = {
+const missingCountries: Record<string, string> = {
   'Åland Islands': 'Åland',
   'American Samoa': 'The Territory of American Samoa',
   Anguilla: 'Anguilla',
@@ -33,7 +34,7 @@ const missingCountries = {
   Greenland: 'Kalaallit Nunaat',
   Guadeloupe: 'Guadeloupe',
   Guam: 'The Territory of Guam',
-  'Guernsey': 'The Bailiwick of Guernsey',
+  Guernsey: 'The Bailiwick of Guernsey',
   'Heard Island and McDonald Islands': 'The Territory of Heard Island and McDonald Islands',
   'Hong Kong': 'The Hong Kong Special Administrative Region of China',
   'Isle of Man': 'The Isle of Man',
@@ -64,35 +65,38 @@ const missingCountries = {
   Tokelau: 'Tokelau',
   'Tristan da Cunha': 'Saint Helena, Ascension and Tristan da Cunha',
   'Turks and Caicos Islands': 'The Turks and Caicos Islands',
-  'U.S. Minor Outlying Islands': 'Baker Island, Howland Island, Jarvis Island, Johnston Atoll, Kingman Reef, Midway Atoll, Navassa Island, Palmyra Atoll, and Wake Island',
+  'U.S. Minor Outlying Islands':
+    'Baker Island, Howland Island, Jarvis Island, Johnston Atoll, Kingman Reef, Midway Atoll, Navassa Island, Palmyra Atoll, and Wake Island',
   'U.S. Virgin Islands': 'The Virgin Islands of the United States',
   'Wallis and Futuna': 'The Territory of the Wallis and Futuna Islands',
   'Western Sahara': 'The Sahrawi Arab Democratic Republic',
 };
 
-module.exports = () => {
-  const countriesCsv = readFileSync(`${__dirname}/data/countries.csv`, 'utf8');
-  const countryFormalNamesByCountryName = {};
+const exists = <T>(thing: T): boolean =>
+  !(thing === undefined || thing === null || (typeof thing === 'number' && Number.isNaN(thing)));
+
+const generateCountries = (): Record<string, string> => {
+  const countriesCsv = readFileSync(path.join(__dirname, 'data', 'countries.csv'), 'utf8');
+  const countryFormalNamesByCountryName: Record<string, string> = {};
   let nbCountries = 0;
 
-  countriesCsv.split('\n').splice(1).forEach((line) => {
+  for (const line of countriesCsv.split('\n').slice(1)) {
     const [countryShort, countryFormal] = line.replace(/\r/g, '').split(';');
-
     if (exists(countryShort) && exists(countryFormal)) {
       countryFormalNamesByCountryName[countryShort] = countryFormal;
       nbCountries += 1;
     }
-  });
+  }
 
   nbCountries += Object.keys(missingCountries).length;
 
   const updated = {
     ...missingCountries,
-    ...countryFormalNamesByCountryName
+    ...countryFormalNamesByCountryName,
   };
 
   writeFileSync(
-    `${__dirname}/data/country-formal-names-by-country-name.json`,
+    path.join(__dirname, 'data', 'country-formal-names-by-country-name.json'),
     JSON.stringify(updated),
   );
 
@@ -100,3 +104,5 @@ module.exports = () => {
 
   return updated;
 };
+
+export default generateCountries;
