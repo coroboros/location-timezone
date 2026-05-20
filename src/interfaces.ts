@@ -35,3 +35,10 @@ export interface StateAnsi {
   name: string;
   uspsCode: string;
 }
+
+export interface Coordinates {
+  latitudeFrom?: number;
+  latitudeTo?: number;
+  longitudeFrom?: number;
+  longitudeTo?: number;
+}

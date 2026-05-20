@@ -1,234 +1,150 @@
 import {
+  capitalByCountryLowerName,
+  capitalByCountryLowerOfficialName,
+  capitalByIso2,
+  capitalByIso3,
   countries,
+  countryByCapitalLowerName,
+  countryByIso2,
+  countryByIso3,
+  countryByLowerName,
+  countryByLowerOfficialName,
   countryCapitals,
   countryIso2ByIso3Codes,
   countryIso2Codes,
+  countryIso2Set,
   countryIso3ByIso2Codes,
   countryIso3Codes,
-} from './data/index.js';
-import { is, isValidCountryIso, match } from './helpers.js';
+  countryIso3Set,
+} from './data/countries.js';
 import type { Capital, Country } from './interfaces.js';
 
 /**
- * @func findCapitalOfCountryIso Find the capital of a country by its
- * country ISO 3166-1 alpha-2 or alpha-3 code.
- *
- * @param  {string}  code  Country ISO code (case insensitive)
- * @return {Capital|undefined}
+ * Find the capital of a country by its ISO 3166-1 alpha-2 or alpha-3 code.
+ * Case-insensitive.
  */
-export const findCapitalOfCountryIso = function findCapitalOfCountryIso(
-  code: string,
-): Capital | undefined {
-  if (!is(String, code)) {
+export const findCapitalOfCountryIso = (code: string): Capital | undefined => {
+  if (typeof code !== 'string') {
     return undefined;
   }
-
-  const countryCode = code.toUpperCase();
-  const { valid, iso2 } = isValidCountryIso(countryCode);
-
+  const upper = code.toUpperCase();
+  const { valid, iso2 } = isValidCountryIso(upper);
   if (!valid) {
     return undefined;
   }
-
-  const alphaType = iso2 ? 'iso2' : 'iso3';
-
-  return countryCapitals.find((capital) =>
-    match({
-      source: capital.country![alphaType],
-      compare: code,
-      partial: false,
-      strict: false,
-    }),
-  );
+  return iso2 ? capitalByIso2.get(upper) : capitalByIso3.get(upper);
 };
 
 /**
- * @func findCapitalOfCountryName Find the capital of a country by its name.
- *
- * @param  {string}  name  Country name (case insensitive)
- * @return {Capital|undefined}
+ * Find the capital of a country by its short or official name. Case-insensitive.
  */
-export const findCapitalOfCountryName = function findCapitalOfCountryName(
-  name: string,
-): Capital | undefined {
-  if (!is(String, name)) {
+export const findCapitalOfCountryName = (name: string): Capital | undefined => {
+  if (typeof name !== 'string') {
     return undefined;
   }
-
-  return countryCapitals.find(
-    (capital) =>
-      match({
-        source: capital.country!.name,
-        compare: name,
-        partial: false,
-        strict: false,
-      }) ||
-      match({
-        source: capital.country!.officialName,
-        compare: name,
-        partial: false,
-        strict: false,
-      }),
-  );
+  const lower = name.toLowerCase();
+  return capitalByCountryLowerName.get(lower) ?? capitalByCountryLowerOfficialName.get(lower);
 };
 
 /**
- * @func findCountryByCapitalName Find a country by its capital name.
- *
- * @param  {string}  name  Capital name (case insensitive, utf-8 or ascii)
- * @return {Country|undefined}
+ * Find a country by its capital name (UTF-8 or ASCII). Case-insensitive.
  */
-export const findCountryByCapitalName = function findCountryByCapitalName(
-  name: string,
-): Country | undefined {
-  if (!is(String, name) || name.trim() === '') {
+export const findCountryByCapitalName = (name: string): Country | undefined => {
+  if (typeof name !== 'string' || name.trim() === '') {
     return undefined;
   }
-
-  return countries.find(
-    (country) =>
-      match({
-        source: country.capital!.name,
-        compare: name,
-        partial: false,
-        strict: false,
-      }) ||
-      match({
-        source: country.capital!.nameAscii,
-        compare: name,
-        partial: false,
-        strict: false,
-      }),
-  );
+  return countryByCapitalLowerName.get(name.toLowerCase());
 };
 
 /**
- * @func findCountryByIso Find a country by its country ISO 3166-1 alpha-2 or alpha-3 code.
- *
- * @param  {string}  code  Country ISO code (case insensitive)
- * @return {Country|undefined}
+ * Find a country by its ISO 3166-1 alpha-2 or alpha-3 code. Case-insensitive.
  */
-export const findCountryByIso = function findCountryByIso(code: string): Country | undefined {
-  if (!is(String, code)) {
+export const findCountryByIso = (code: string): Country | undefined => {
+  if (typeof code !== 'string') {
     return undefined;
   }
-
-  const countryCode = code.toUpperCase();
-  const { valid, iso2 } = isValidCountryIso(countryCode);
-
+  const upper = code.toUpperCase();
+  const { valid, iso2 } = isValidCountryIso(upper);
   if (!valid) {
     return undefined;
   }
-
-  const alphaType = iso2 ? 'iso2' : 'iso3';
-
-  return countries.find((country) =>
-    match({
-      source: country[alphaType],
-      compare: code,
-      partial: false,
-      strict: false,
-    }),
-  );
+  return iso2 ? countryByIso2.get(upper) : countryByIso3.get(upper);
 };
 
 /**
- * @func findCountryByName Find a country by its name.
- *
- * @param  {string}  name  Country name (case insensitive)
- * @return {Country|undefined}
+ * Find a country by its short or official name. Case-insensitive.
  */
-export const findCountryByName = function findCountryByName(name: string): Country | undefined {
-  if (!is(String, name)) {
+export const findCountryByName = (name: string): Country | undefined => {
+  if (typeof name !== 'string') {
     return undefined;
   }
-
-  return countries.find(
-    (country) =>
-      match({
-        source: country.name,
-        compare: name,
-        partial: false,
-        strict: false,
-      }) ||
-      match({
-        source: country.officialName,
-        compare: name,
-        partial: false,
-        strict: false,
-      }),
-  );
+  const lower = name.toLowerCase();
+  return countryByLowerName.get(lower) ?? countryByLowerOfficialName.get(lower);
 };
 
 /**
- * @func getCapitals Get all country capitals.
- *
- * @return  {Capital[]}
+ * All country capitals, sorted by country name ascending.
  */
-export const getCapitals = function getCapitals(): Capital[] {
-  return countryCapitals;
-};
+export const getCapitals = (): ReadonlyArray<Capital> => countryCapitals;
 
 /**
- * @func getCountries Get all countries.
- *
- * @return  {Country[]}
+ * All countries, sorted by country name ascending.
  */
-export const getCountries = function getCountries(): Country[] {
-  return countries;
-};
+export const getCountries = (): ReadonlyArray<Country> => countries;
 
 /**
- * @func getCountryIso2CodeByIso3 Get the country ISO 3166-1 alpha-2 code
- * related to an alpha-3 code.
- *
- * @param  {string}  iso3  Country ISO 3166-1 alpha-3 code (case insensitive)
- * @return {string|undefined}
+ * Get the ISO 3166-1 alpha-2 code paired with an alpha-3 code. Case-insensitive.
  */
-export const getCountryIso2CodeByIso3 = function getCountryIso2CodeByIso3(
-  iso3: string,
-): string | undefined {
-  if (!is(String, iso3)) {
+export const getCountryIso2CodeByIso3 = (iso3: string): string | undefined => {
+  if (typeof iso3 !== 'string') {
     return undefined;
   }
-
   return countryIso2ByIso3Codes[iso3.toUpperCase()];
 };
 
 /**
- * @func getCountryIso2Codes Get all country ISO 3166-1 alpha-2 codes.
- *
- * @return  {string[]}
+ * All ISO 3166-1 alpha-2 codes, sorted ascending.
  */
-export const getCountryIso2Codes = function getCountryIso2Codes(): string[] {
-  return countryIso2Codes;
-};
+export const getCountryIso2Codes = (): ReadonlyArray<string> => countryIso2Codes;
 
 /**
- * @func getCountryIso3CodeByIso2 Get the country ISO 3166-1 alpha-2 code
- * related to an alpha-3 code.
- *
- * @param  {string}  iso2  Country ISO 3166-1 alpha-2 code (case insensitive)
- * @return {string|undefined}
+ * Get the ISO 3166-1 alpha-3 code paired with an alpha-2 code. Case-insensitive.
  */
-export const getCountryIso3CodeByIso2 = function getCountryIso3CodeByIso2(
-  iso2: string,
-): string | undefined {
-  if (!is(String, iso2)) {
+export const getCountryIso3CodeByIso2 = (iso2: string): string | undefined => {
+  if (typeof iso2 !== 'string') {
     return undefined;
   }
-
   return countryIso3ByIso2Codes[iso2.toUpperCase()];
 };
 
 /**
- * @func getCountryIso3Codes Get all country ISO 3166-1 alpha-3 codes.
- *
- * @return  {string[]}
+ * All ISO 3166-1 alpha-3 codes, sorted ascending.
  */
-export const getCountryIso3Codes = function getCountryIso3Codes(): string[] {
-  return countryIso3Codes;
-};
+export const getCountryIso3Codes = (): ReadonlyArray<string> => countryIso3Codes;
 
-// see helpers
-export { isValidCountryIso };
+/**
+ * Validate an ISO 3166-1 alpha-2 or alpha-3 code. **Case-sensitive** — codes
+ * must be uppercase.
+ */
+export const isValidCountryIso = (
+  code: string,
+): { valid: boolean; iso2: boolean; iso3: boolean } => {
+  const res = { valid: false, iso2: false, iso3: false };
+  if (typeof code !== 'string') {
+    return res;
+  }
+  if (code.length < 2 || code.length > 3) {
+    return res;
+  }
+  if (countryIso2Set.has(code)) {
+    res.valid = true;
+    res.iso2 = true;
+    return res;
+  }
+  if (countryIso3Set.has(code)) {
+    res.valid = true;
+    res.iso3 = true;
+    return res;
+  }
+  return res;
+};

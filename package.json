@@ -18,6 +18,46 @@
         "default": "./dist/index.cjs"
       }
     },
+    "./countries": {
+      "import": {
+        "types": "./dist/countries.d.mts",
+        "default": "./dist/countries.mjs"
+      },
+      "require": {
+        "types": "./dist/countries.d.cts",
+        "default": "./dist/countries.cjs"
+      }
+    },
+    "./locations": {
+      "import": {
+        "types": "./dist/locations.d.mts",
+        "default": "./dist/locations.mjs"
+      },
+      "require": {
+        "types": "./dist/locations.d.cts",
+        "default": "./dist/locations.cjs"
+      }
+    },
+    "./states-ansi": {
+      "import": {
+        "types": "./dist/states-ansi.d.mts",
+        "default": "./dist/states-ansi.mjs"
+      },
+      "require": {
+        "types": "./dist/states-ansi.d.cts",
+        "default": "./dist/states-ansi.cjs"
+      }
+    },
+    "./timezones": {
+      "import": {
+        "types": "./dist/timezones.d.mts",
+        "default": "./dist/timezones.mjs"
+      },
+      "require": {
+        "types": "./dist/timezones.d.cts",
+        "default": "./dist/timezones.cjs"
+      }
+    },
     "./package.json": "./package.json"
   },
   "files": [
@@ -28,7 +68,8 @@
   ],
   "scripts": {
     "build": "tsdown",
-    "build:data": "node scripts/clean-and-generate.js",
+    "build:data": "tsx scripts/clean-and-generate.ts",
+    "bench": "pnpm build && node bench/location-timezone.bench.mjs",
     "dev": "tsdown --watch",
     "lint": "biome check .",
     "lint:fix": "biome check --write .",
@@ -80,8 +121,11 @@
     "@types/node": "^22.0.0",
     "@vitest/coverage-v8": "^4.1.7",
     "country-locale-map": "^1.9.12",
+    "fast-check": "^4.8.0",
     "joi": "^18.2.1",
+    "mitata": "^1.0.34",
     "tsdown": "^0.22.0",
+    "tsx": "^4.22.3",
     "typescript": "^6.0.3",
     "vitest": "^4.1.7"
   }

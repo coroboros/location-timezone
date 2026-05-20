@@ -1,179 +1,90 @@
-import { countries, countryCapitals, locations, timezones } from './data/index.js';
-import { exists, is, isValidCountryIso, match } from './helpers.js';
+import { isValidCountryIso } from './countries.js';
+import {
+  capitalByCountryLowerName,
+  capitalByCountryLowerOfficialName,
+  capitalByIso2,
+  capitalByIso3,
+  countryByIso2,
+  countryByIso3,
+  countryByLowerName,
+  countryByLowerOfficialName,
+} from './data/countries.js';
+import { locationByCityLowerName } from './data/locations.js';
+import { timezones } from './data/timezones.js';
 
 /**
- * @func findTimezoneByCapitalOfCountryIso Find a timezone based on the capital
- * of a country ISO 3166-1 alpha-2 or alpha-3 code.
- *
- * @param   {string}  code  Country ISO code (case insensitive)
- * @return  {string|undefined}
+ * IANA timezone for a country's capital, by ISO 3166-1 alpha-2 or alpha-3 code.
+ * Case-insensitive.
  */
-export const findTimezoneByCapitalOfCountryIso = function findTimezoneByCapitalOfCountryIso(
-  code: string,
-): string | undefined {
-  if (!is(String, code)) {
+export const findTimezoneByCapitalOfCountryIso = (code: string): string | undefined => {
+  if (typeof code !== 'string') {
     return undefined;
   }
-
-  const countryCode = code.toUpperCase();
-  const { valid, iso2 } = isValidCountryIso(countryCode);
-
+  const upper = code.toUpperCase();
+  const { valid, iso2 } = isValidCountryIso(upper);
   if (!valid) {
     return undefined;
   }
-
-  const alphaType = iso2 ? 'iso2' : 'iso3';
-  return countryCapitals.find((capital) =>
-    match({
-      source: capital.country![alphaType],
-      compare: countryCode,
-      partial: false,
-      strict: true,
-    }),
-  )?.timezone;
+  return (iso2 ? capitalByIso2.get(upper) : capitalByIso3.get(upper))?.timezone;
 };
 
 /**
- * @func findTimezoneByCapitalOfCountryName Find a timezone based on the capital
- * of a country (name).
- *
- * @param   {string}  name  Country name (case insensitive)
- * @return  {string|undefined}
+ * IANA timezone for a country's capital, by country short or official name.
+ * Case-insensitive.
  */
-export const findTimezoneByCapitalOfCountryName = function findTimezoneByCapitalOfCountryName(
-  name: string,
-): string | undefined {
-  if (!is(String, name)) {
+export const findTimezoneByCapitalOfCountryName = (name: string): string | undefined => {
+  if (typeof name !== 'string') {
     return undefined;
   }
-
-  return countryCapitals.find(
-    (capital) =>
-      match({
-        source: capital.country!.name,
-        compare: name,
-        partial: false,
-        strict: false,
-      }) ||
-      match({
-        source: capital.country!.officialName,
-        compare: name,
-        partial: false,
-        strict: false,
-      }),
-  )?.timezone;
+  const lower = name.toLowerCase();
+  return (capitalByCountryLowerName.get(lower) ?? capitalByCountryLowerOfficialName.get(lower))
+    ?.timezone;
 };
 
 /**
- * @func findTimezoneByCityName Find a timezone based on a city name.
- *
- * @param   {string}  name  City name (case insensitive, utf-8 or ascii)
- * @return  {string|undefined}
+ * IANA timezone for a city, by name (UTF-8 or ASCII). Case-insensitive.
  */
-export const findTimezoneByCityName = function findTimezoneByCityName(
-  name: string,
-): string | undefined {
-  if (!is(String, name) || name.trim() === '') {
+export const findTimezoneByCityName = (name: string): string | undefined => {
+  if (typeof name !== 'string' || name.trim() === '') {
     return undefined;
   }
-
-  return locations.find(
-    (location) =>
-      match({
-        source: location.city,
-        compare: name,
-        partial: false,
-        strict: false,
-      }) ||
-      match({
-        source: location.cityAscii,
-        compare: name,
-        partial: false,
-        strict: false,
-      }),
-  )?.timezone;
+  return locationByCityLowerName.get(name.toLowerCase())?.timezone;
 };
 
+const EMPTY_TIMEZONES: ReadonlyArray<string> = Object.freeze([]);
+
 /**
- * @func findTimezonesByCountryIso Find timezones based on a country
- * ISO 3166-1 alpha-2 or alpha-3 code.
- *
- * @param   {string}  code  Country ISO code (case insensitive)
- * @return  {string[]}
+ * All IANA timezones for a country, by ISO 3166-1 alpha-2 or alpha-3 code.
+ * Case-insensitive.
  */
-export const findTimezonesByCountryIso = function findTimezonesByCountryIso(
-  code: string,
-): string[] {
-  if (!is(String, code)) {
-    return [];
+export const findTimezonesByCountryIso = (code: string): ReadonlyArray<string> => {
+  if (typeof code !== 'string') {
+    return EMPTY_TIMEZONES;
   }
-
-  const countryCode = code.toUpperCase();
-  const { valid, iso2 } = isValidCountryIso(countryCode);
-
+  const upper = code.toUpperCase();
+  const { valid, iso2 } = isValidCountryIso(upper);
   if (!valid) {
-    return [];
+    return EMPTY_TIMEZONES;
   }
-
-  const alphaType = iso2 ? 'iso2' : 'iso3';
-
-  const country = countries.find((c) =>
-    match({
-      source: c[alphaType],
-      compare: code,
-      partial: false,
-      strict: false,
-    }),
-  );
-
-  if (!exists(country)) {
-    return [];
-  }
-
-  return country.timezones;
+  const country = iso2 ? countryByIso2.get(upper) : countryByIso3.get(upper);
+  return country?.timezones ?? EMPTY_TIMEZONES;
 };
 
 /**
- * @func findTimezonesByCountryName Find timezones based on a country name.
- *
- * @param   {string}  name  Country name (case insensitive)
- * @return  {string[]}
+ * All IANA timezones for a country, by country short or official name.
+ * Case-insensitive.
  */
-export const findTimezonesByCountryName = function findTimezonesByCountryName(
-  name: string,
-): string[] {
-  if (!is(String, name)) {
-    return [];
+export const findTimezonesByCountryName = (name: string): ReadonlyArray<string> => {
+  if (typeof name !== 'string') {
+    return EMPTY_TIMEZONES;
   }
-
-  const country = countries.find(
-    (c) =>
-      match({
-        source: c.name,
-        compare: name,
-        partial: false,
-        strict: false,
-      }) ||
-      match({
-        source: c.officialName,
-        compare: name,
-        partial: false,
-        strict: false,
-      }),
-  );
-
-  if (!exists(country)) {
-    return [];
-  }
-
-  return country.timezones;
+  const lower = name.toLowerCase();
+  const country = countryByLowerName.get(lower) ?? countryByLowerOfficialName.get(lower);
+  return country?.timezones ?? EMPTY_TIMEZONES;
 };
 
 /**
- * @func getTimezones Get all timezones.
- *
- * @return  {string[]}
+ * All IANA timezones (the subset returned by `Intl.supportedValuesOf('timeZone')`
+ * at data-build time), sorted ascending.
  */
-export const getTimezones = function getTimezones(): string[] {
-  return timezones;
-};
+export const getTimezones = (): ReadonlyArray<string> => timezones;

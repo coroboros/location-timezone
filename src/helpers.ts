@@ -1,5 +1,3 @@
-import { countryIso2Codes, countryIso3Codes } from './data/index.js';
-
 export function exists<T>(thing: T): thing is NonNullable<T> {
   return !(
     thing === undefined ||
@@ -13,19 +11,23 @@ export function is(Type: typeof Number, thing: unknown): thing is number;
 export function is(Type: typeof Boolean, thing: unknown): thing is boolean;
 export function is<T>(Type: new (...args: never[]) => T, thing: unknown): thing is T;
 export function is(Type: unknown, thing: unknown): boolean {
-  if (!exists(Type) || !exists(thing)) {
-    return false;
+  if (Type === String) {
+    return typeof thing === 'string';
   }
-
-  if ((thing as { constructor?: unknown }).constructor === Type) {
-    return true;
+  if (Type === Number) {
+    return typeof thing === 'number' && !Number.isNaN(thing);
   }
-
-  return typeof Type === 'function' && thing instanceof (Type as new (...args: never[]) => unknown);
+  if (Type === Boolean) {
+    return typeof thing === 'boolean';
+  }
+  if (typeof Type === 'function' && exists(thing)) {
+    return thing instanceof (Type as new (...args: never[]) => unknown);
+  }
+  return false;
 }
 
 export function hasLen({ str, from, to }: { str: string; from: number; to: number }): boolean {
-  if (!is(String, str)) {
+  if (typeof str !== 'string') {
     return false;
   }
 
@@ -50,7 +52,7 @@ export function match({
   partial?: boolean;
   strict?: boolean;
 }): boolean {
-  if (!is(String, source) || !is(String, compare)) {
+  if (typeof source !== 'string' || typeof compare !== 'string') {
     return false;
   }
 
@@ -63,26 +65,4 @@ export function match({
   }
 
   return source.toLowerCase() === compare.toLowerCase();
-}
-
-export function isValidCountryIso(code: string): { valid: boolean; iso2: boolean; iso3: boolean } {
-  const res = { valid: false, iso2: false, iso3: false };
-
-  if (!hasLen({ str: code, from: 2, to: 3 })) {
-    return res;
-  }
-
-  if (countryIso2Codes.includes(code)) {
-    res.valid = true;
-    res.iso2 = true;
-    return res;
-  }
-
-  if (countryIso3Codes.includes(code)) {
-    res.valid = true;
-    res.iso3 = true;
-    return res;
-  }
-
-  return res;
 }
