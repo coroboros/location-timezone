@@ -18,6 +18,46 @@
         "default": "./dist/index.cjs"
       }
     },
+    "./countries": {
+      "import": {
+        "types": "./dist/countries.d.mts",
+        "default": "./dist/countries.mjs"
+      },
+      "require": {
+        "types": "./dist/countries.d.cts",
+        "default": "./dist/countries.cjs"
+      }
+    },
+    "./locations": {
+      "import": {
+        "types": "./dist/locations.d.mts",
+        "default": "./dist/locations.mjs"
+      },
+      "require": {
+        "types": "./dist/locations.d.cts",
+        "default": "./dist/locations.cjs"
+      }
+    },
+    "./states-ansi": {
+      "import": {
+        "types": "./dist/states-ansi.d.mts",
+        "default": "./dist/states-ansi.mjs"
+      },
+      "require": {
+        "types": "./dist/states-ansi.d.cts",
+        "default": "./dist/states-ansi.cjs"
+      }
+    },
+    "./timezones": {
+      "import": {
+        "types": "./dist/timezones.d.mts",
+        "default": "./dist/timezones.mjs"
+      },
+      "require": {
+        "types": "./dist/timezones.d.cts",
+        "default": "./dist/timezones.cjs"
+      }
+    },
     "./package.json": "./package.json"
   },
   "files": [
