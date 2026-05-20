@@ -7,10 +7,10 @@
 
 **Capital, country, city, ANSI state, and IANA timezone lookups for Node.js.**
 
-Lookup helpers for capitals, countries, cities, ANSI states, and IANA timezones. Data: UN country list, CIA World Factbook, ISO 3166-1, ANSI state codes, and Node's `Intl.supportedValuesOf('timeZone')` — compressed via `zipson`.
+Curated UN country names, CIA Factbook official forms, ISO 3166-1 codes, ANSI FIPS state codes, IANA timezones, and ~40,000 city coordinates. One zipson-compressed package. O(1) lookups.
 
 [![npm](https://img.shields.io/npm/v/@coroboros/location-timezone?style=flat-square&color=000000)](https://www.npmjs.com/package/@coroboros/location-timezone)
-[![branch](https://img.shields.io/badge/branch-stable-000000?style=flat-square)](https://github.com/coroboros/location-timezone)
+[![ci](https://img.shields.io/github/actions/workflow/status/coroboros/location-timezone/ci.yml?branch=main&style=flat-square&label=ci&color=000000)](https://github.com/coroboros/location-timezone/actions/workflows/ci.yml)
 [![license](https://img.shields.io/badge/license-MIT-000000?style=flat-square)](https://opensource.org/licenses/MIT)
 [![stars](https://img.shields.io/github/stars/coroboros/location-timezone?style=flat-square&label=stars&color=000000)](https://github.com/coroboros/location-timezone)
 [![coroboros.com](https://img.shields.io/badge/coroboros.com-000000?style=flat-square&logo=data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIyNCIgaGVpZ2h0PSIyNCIgdmlld0JveD0iMCAwIDI0IDI0IiBmaWxsPSJub25lIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjIiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCI+PGNpcmNsZSBjeD0iMTIiIGN5PSIxMiIgcj0iMTAiLz48cGF0aCBkPSJNMiAxMmgyME0xMiAyYTE1LjMgMTUuMyAwIDAgMSA0IDEwIDE1LjMgMTUuMyAwIDAgMS00IDEwIDE1LjMgMTUuMyAwIDAgMS00LTEwIDE1LjMgMTUuMyAwIDAgMSA0LTEweiIvPjwvc3ZnPg==)](https://coroboros.com)
@@ -23,8 +23,10 @@ Lookup helpers for capitals, countries, cities, ANSI states, and IANA timezones.
 - [Requirements](#requirements)
 - [Install](#install)
 - [Usage](#usage)
+- [Why this exists](#why-this-exists)
 - [Data](#data)
 - [API](#api)
+- [Subpath exports](#subpath-exports)
 - [Limitations](#limitations)
 - [Contributing](#contributing)
 - [License](#license)
@@ -80,6 +82,10 @@ const locationTimezone = require('@coroboros/location-timezone').default;
 
 locationTimezone.findStateAnsiByUspsCode('NY');
 ```
+
+## Why this exists
+
+Country, capital, city, ANSI state, and timezone data normally ships in separate npm packages with mismatched cross-references. `@coroboros/location-timezone` consolidates them into one zipson-compressed payload: UN country names, CIA Factbook official forms, ISO 3166-1 codes, ANSI FIPS state codes, IANA timezones, and ~40,000 cities with coordinates. Lookups resolve in O(1) via `Map` and `Set` indexes built once at module load.
 
 ## Data
 
@@ -457,6 +463,19 @@ All IANA timezones for a country, by name.
 All IANA timezones (the subset returned by `Intl.supportedValuesOf('timeZone')` at data-build time), sorted ascending.
 
 </details>
+
+## Subpath exports
+
+The main entry `@coroboros/location-timezone` bundles every domain. For finer-grained tree-shaking, import only the domain you need:
+
+```ts
+import { findStateAnsiByUspsCode } from '@coroboros/location-timezone/states-ansi';  // ~5 kB
+import { findCountryByIso } from '@coroboros/location-timezone/countries';            // ~85 kB
+import { findTimezoneByCityName } from '@coroboros/location-timezone/timezones';      // ~870 kB
+import { findLocationsByCountryIso } from '@coroboros/location-timezone/locations';   // ~860 kB
+```
+
+Sizes include the chunked dependencies each subpath transitively pulls. The merged default object is only exposed on the main entry; subpaths expose named exports only.
 
 ## Limitations
 
