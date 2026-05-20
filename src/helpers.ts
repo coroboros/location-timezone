@@ -1,5 +1,3 @@
-import { countryIso2Codes, countryIso3Codes } from './data/index.js';
-
 export function exists<T>(thing: T): thing is NonNullable<T> {
   return !(
     thing === undefined ||
@@ -63,26 +61,4 @@ export function match({
   }
 
   return source.toLowerCase() === compare.toLowerCase();
-}
-
-export function isValidCountryIso(code: string): { valid: boolean; iso2: boolean; iso3: boolean } {
-  const res = { valid: false, iso2: false, iso3: false };
-
-  if (!hasLen({ str: code, from: 2, to: 3 })) {
-    return res;
-  }
-
-  if (countryIso2Codes.includes(code)) {
-    res.valid = true;
-    res.iso2 = true;
-    return res;
-  }
-
-  if (countryIso3Codes.includes(code)) {
-    res.valid = true;
-    res.iso3 = true;
-    return res;
-  }
-
-  return res;
 }

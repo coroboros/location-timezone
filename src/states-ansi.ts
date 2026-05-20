@@ -1,111 +1,54 @@
-import { statesAnsi } from './data/index.js';
-import { hasLen, is, match } from './helpers.js';
+import {
+  stateAnsiByFipsCode,
+  stateAnsiByGnisid,
+  stateAnsiByLowerName,
+  stateAnsiByUspsCode,
+  statesAnsi,
+} from './data/states-ansi.js';
+import { hasLen } from './helpers.js';
 import type { StateAnsi } from './interfaces.js';
 
 /**
- * @func findStateAnsiByFipsCode Find the state's information based on the
- * Federal Information Processing Standard (FIPS) State Code ANSI
- * (American National Standards Institute, USA states only).
- *
- * @param  {string}  code  FIPS ANSI code (case insensitive, 2 chars)
- * @return {StateAnsi|undefined}
+ * Find a US state by FIPS State Code ANSI. Length-2 strings only.
  */
-export const findStateAnsiByFipsCode = function findStateAnsiByFipsCode(
-  code: string,
-): StateAnsi | undefined {
+export const findStateAnsiByFipsCode = (code: string): StateAnsi | undefined => {
   if (!hasLen({ str: code, from: 2, to: 2 })) {
     return undefined;
   }
-
-  return statesAnsi.find((state) =>
-    match({
-      source: state.fipsCode,
-      compare: code,
-      partial: false,
-      strict: false,
-    }),
-  );
+  return stateAnsiByFipsCode.get(code);
 };
 
 /**
- * @func findStateAnsiByGnisid Find the state's information based on the
- * Geographic Names Information System Identifier (GNISID) ANSI
- * (American National Standards Institute, USA states only).
- *
- * @param  {string}  id  GNISID ANSI (case insensitive)
- * @return {StateAnsi|undefined}
+ * Find a US state by GNISID (Geographic Names Information System Identifier).
  */
-export const findStateAnsiByGnisid = function findStateAnsiByGnisid(
-  id: string,
-): StateAnsi | undefined {
-  if (!is(String, id)) {
+export const findStateAnsiByGnisid = (id: string): StateAnsi | undefined => {
+  if (typeof id !== 'string') {
     return undefined;
   }
-
-  return statesAnsi.find((state) =>
-    match({
-      source: state.gnisid,
-      compare: id,
-      partial: false,
-      strict: false,
-    }),
-  );
+  return stateAnsiByGnisid.get(id);
 };
 
 /**
- * @func findStateAnsiByName Find the state's information by its name ANSI
- * (American National Standards Institute, USA states only).
- *
- * @param  {string}  name  Name ANSI (case insensitive)
- * @return {StateAnsi|undefined}
+ * Find a US state by name. Case-insensitive.
  */
-export const findStateAnsiByName = function findStateAnsiByName(
-  name: string,
-): StateAnsi | undefined {
-  if (!is(String, name)) {
+export const findStateAnsiByName = (name: string): StateAnsi | undefined => {
+  if (typeof name !== 'string') {
     return undefined;
   }
-
-  return statesAnsi.find((state) =>
-    match({
-      source: state.name,
-      compare: name,
-      partial: false,
-      strict: false,
-    }),
-  );
+  return stateAnsiByLowerName.get(name.toLowerCase());
 };
 
 /**
- * @func findStateAnsiByUspsCode Find the state's information based on the
- * Official United States Postal Service (USPS) Code ANSI
- * (American National Standards Institute, USA states only).
- *
- * @param  {string}  code  USPS ANSI code (case insensitive, 2 chars)
- * @return {StateAnsi|undefined}
+ * Find a US state by USPS code. Length-2 strings only. Case-insensitive.
  */
-export const findStateAnsiByUspsCode = function findStateAnsiByUspsCode(
-  code: string,
-): StateAnsi | undefined {
+export const findStateAnsiByUspsCode = (code: string): StateAnsi | undefined => {
   if (!hasLen({ str: code, from: 2, to: 2 })) {
     return undefined;
   }
-
-  return statesAnsi.find((state) =>
-    match({
-      source: state.uspsCode,
-      compare: code,
-      partial: false,
-      strict: false,
-    }),
-  );
+  return stateAnsiByUspsCode.get(code.toUpperCase());
 };
 
 /**
- * @func getStatesAnsi Get all states ANSI (American National Standards Institute, USA states only).
- *
- * @return  {StateAnsi[]}
+ * All US states (ANSI), sorted by name ascending.
  */
-export const getStatesAnsi = function getStatesAnsi(): StateAnsi[] {
-  return statesAnsi;
-};
+export const getStatesAnsi = (): StateAnsi[] => statesAnsi;

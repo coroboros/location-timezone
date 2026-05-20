@@ -1,12 +1,22 @@
-import { locations } from './data/index.js';
-import { exists, is, isValidCountryIso, match } from './helpers.js';
+import { isValidCountryIso } from './countries.js';
+import {
+  EMPTY_LOCATIONS,
+  locations,
+  locationsByCountryLowerName,
+  locationsByCountryLowerOfficialName,
+  locationsByIso2,
+  locationsByIso3,
+  locationsByLowerProvince,
+  locationsByLowerState,
+} from './data/locations.js';
+import { match } from './helpers.js';
 import type { Location } from './interfaces.js';
 
 /**
- * Find locations within a bounding box. At least one latitude and one longitude bound
- * must be set; missing bounds default to `±Infinity`.
+ * Find locations within a bounding box. At least one latitude bound and one
+ * longitude bound must be set; missing bounds default to `±Infinity`.
  */
-export const findLocationsByCoordinates = function findLocationsByCoordinates({
+export const findLocationsByCoordinates = ({
   latitudeFrom,
   latitudeTo,
   longitudeFrom,
@@ -16,162 +26,125 @@ export const findLocationsByCoordinates = function findLocationsByCoordinates({
   latitudeTo?: number;
   longitudeFrom?: number;
   longitudeTo?: number;
-}): Location[] {
-  const latFrom = is(Number, latitudeFrom) ? latitudeFrom : Number.NEGATIVE_INFINITY;
-  const latTo = is(Number, latitudeTo) ? latitudeTo : Number.POSITIVE_INFINITY;
-  const longFrom = is(Number, longitudeFrom) ? longitudeFrom : Number.NEGATIVE_INFINITY;
-  const longTo = is(Number, longitudeTo) ? longitudeTo : Number.POSITIVE_INFINITY;
+}): Location[] => {
+  const latFromDefined = typeof latitudeFrom === 'number';
+  const latToDefined = typeof latitudeTo === 'number';
+  const longFromDefined = typeof longitudeFrom === 'number';
+  const longToDefined = typeof longitudeTo === 'number';
 
-  // at least one of each value is necessary
-  if (
-    (!exists(latitudeFrom) && !exists(latitudeTo)) ||
-    (!exists(longitudeFrom) && !exists(longitudeTo))
-  ) {
+  if ((!latFromDefined && !latToDefined) || (!longFromDefined && !longToDefined)) {
     return [];
   }
 
-  const res = locations.filter(
+  const latFrom = latFromDefined ? latitudeFrom : Number.NEGATIVE_INFINITY;
+  const latTo = latToDefined ? latitudeTo : Number.POSITIVE_INFINITY;
+  const longFrom = longFromDefined ? longitudeFrom : Number.NEGATIVE_INFINITY;
+  const longTo = longToDefined ? longitudeTo : Number.POSITIVE_INFINITY;
+
+  return locations.filter(
     (location) =>
       location.latitude >= latFrom &&
       location.latitude <= latTo &&
       location.longitude >= longFrom &&
       location.longitude <= longTo,
   );
-
-  return res;
 };
 
 /**
- * @func findLocationsByCountryIso Find locations based on a country ISO 3166-1 alpha-2
- * or alpha-3 code.
- *
- * @param   {string}  code  Country ISO code (case insensitive)
- * @return  {Location[]}
+ * Find locations by ISO 3166-1 alpha-2 or alpha-3 code. Case-insensitive.
  */
-export const findLocationsByCountryIso = function findLocationsByCountryIso(
-  code: string,
-): Location[] {
-  if (!is(String, code)) {
+export const findLocationsByCountryIso = (code: string): Location[] => {
+  if (typeof code !== 'string') {
     return [];
   }
-
-  const countryCode = code.toUpperCase();
-  const { valid, iso2 } = isValidCountryIso(countryCode);
-
+  const upper = code.toUpperCase();
+  const { valid, iso2 } = isValidCountryIso(upper);
   if (!valid) {
     return [];
   }
-
-  const alphaType = iso2 ? 'iso2' : 'iso3';
-  const res = locations.filter((location) =>
-    match({
-      source: location.country[alphaType],
-      compare: countryCode,
-      partial: false,
-      strict: true,
-    }),
-  );
-
-  return res;
+  return (iso2 ? locationsByIso2.get(upper) : locationsByIso3.get(upper)) ?? EMPTY_LOCATIONS;
 };
 
 /**
- * @func findLocationsByCountryName Find locations based on a country name.
- *
- * @param   {string}        name     Country name (case insensitive)
- * @param   {boolean}       partialMatch  Whether to include partial matches
- * @return  {Location[]}
+ * Find locations by country short or official name. Case-insensitive.
  */
-export const findLocationsByCountryName = function findLocationsByCountryName(
+export const findLocationsByCountryName = (
   name: string,
   partialMatch: boolean = false,
-): Location[] {
-  if (!is(String, name)) {
+): Location[] => {
+  if (typeof name !== 'string') {
     return [];
   }
+  if (partialMatch === true) {
+    return locations.filter(
+      (location) =>
+        match({
+          partial: true,
+          source: location.country.name,
+          compare: name,
+          strict: false,
+        }) ||
+        match({
+          partial: true,
+          source: location.country.officialName,
+          compare: name,
+          strict: false,
+        }),
+    );
+  }
+  const lower = name.toLowerCase();
+  return (
+    locationsByCountryLowerName.get(lower) ??
+    locationsByCountryLowerOfficialName.get(lower) ??
+    EMPTY_LOCATIONS
+  );
+};
 
-  const partial = partialMatch === true;
-  const res = locations.filter(
-    (location) =>
+/**
+ * Find locations by province. Case-insensitive. Province data is not
+ * exhaustively verified — treat partial matches as best-effort.
+ */
+export const findLocationsByProvince = (
+  name: string,
+  partialMatch: boolean = false,
+): Location[] => {
+  if (typeof name !== 'string') {
+    return [];
+  }
+  if (partialMatch === true) {
+    return locations.filter((location) =>
       match({
-        partial,
-        source: location.country.name,
-        compare: name,
-        strict: false,
-      }) ||
-      match({
-        partial,
-        source: location.country.officialName,
+        partial: true,
+        source: location.province,
         compare: name,
         strict: false,
       }),
-  );
-
-  return res;
+    );
+  }
+  return locationsByLowerProvince.get(name.toLowerCase()) ?? EMPTY_LOCATIONS;
 };
 
 /**
- * @func findLocationsByProvince Find locations based on a province
- * (not recommended, unreliable data).
- *
- * @param   {string}        name  Province name (case insensitive)
- * @param   {boolean}       partialMatch Whether to include partial matches
- * @return  {Location[]}
+ * Find locations by USPS state name or code (US only). Case-insensitive.
  */
-export const findLocationsByProvince = function findLocationsByProvince(
-  name: string,
-  partialMatch: boolean = false,
-): Location[] {
-  if (!is(String, name)) {
+export const findLocationsByState = (name: string, partialMatch: boolean = false): Location[] => {
+  if (typeof name !== 'string') {
     return [];
   }
-
-  const partial = partialMatch === true;
-  const res = locations.filter((location) =>
-    match({
-      partial,
-      source: location.province,
-      compare: name,
-      strict: false,
-    }),
-  );
-
-  return res;
-};
-
-/**
- * @func findLocationsByState Find locations based on the state name.
- *
- * @param   {string}          name  State name (case insensitive, 2 chars)
- * @param   {boolean}         partialMatch  Whether to include partial matches
- * @return  {Location[]}
- */
-export const findLocationsByState = function findLocationsByState(
-  name: string,
-  partialMatch: boolean = false,
-): Location[] {
-  if (!is(String, name)) {
-    return [];
+  if (partialMatch === true) {
+    return locations.filter((location) =>
+      match({
+        partial: true,
+        source: location.state,
+        compare: name,
+        strict: false,
+      }),
+    );
   }
-
-  const partial = partialMatch === true;
-  const res = locations.filter((location) =>
-    match({
-      partial,
-      source: location.state,
-      compare: name,
-      strict: false,
-    }),
-  );
-
-  return res;
+  return locationsByLowerState.get(name.toLowerCase()) ?? EMPTY_LOCATIONS;
 };
 
 /**
- * @func getLocations Get all locations.
- *
- * @return  {Location[]}
+ * All locations, sorted by city name ascending.
  */
-export const getLocations = function getLocations(): Location[] {
-  return locations;
-};
+export const getLocations = (): Location[] => locations;
