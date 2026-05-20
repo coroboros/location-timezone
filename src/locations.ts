@@ -12,6 +12,11 @@ import {
 import { match } from './helpers.js';
 import type { Location } from './interfaces.js';
 
+const freezeArray = (arr: Location[]): ReadonlyArray<Location> => {
+  Object.freeze(arr);
+  return arr;
+};
+
 /**
  * Find locations within a bounding box. At least one latitude bound and one
  * longitude bound must be set; missing bounds default to `±Infinity`.
@@ -26,14 +31,14 @@ export const findLocationsByCoordinates = ({
   latitudeTo?: number;
   longitudeFrom?: number;
   longitudeTo?: number;
-}): Location[] => {
+}): ReadonlyArray<Location> => {
   const latFromDefined = typeof latitudeFrom === 'number';
   const latToDefined = typeof latitudeTo === 'number';
   const longFromDefined = typeof longitudeFrom === 'number';
   const longToDefined = typeof longitudeTo === 'number';
 
   if ((!latFromDefined && !latToDefined) || (!longFromDefined && !longToDefined)) {
-    return [];
+    return EMPTY_LOCATIONS;
   }
 
   const latFrom = latFromDefined ? latitudeFrom : Number.NEGATIVE_INFINITY;
@@ -41,26 +46,28 @@ export const findLocationsByCoordinates = ({
   const longFrom = longFromDefined ? longitudeFrom : Number.NEGATIVE_INFINITY;
   const longTo = longToDefined ? longitudeTo : Number.POSITIVE_INFINITY;
 
-  return locations.filter(
-    (location) =>
-      location.latitude >= latFrom &&
-      location.latitude <= latTo &&
-      location.longitude >= longFrom &&
-      location.longitude <= longTo,
+  return freezeArray(
+    locations.filter(
+      (location) =>
+        location.latitude >= latFrom &&
+        location.latitude <= latTo &&
+        location.longitude >= longFrom &&
+        location.longitude <= longTo,
+    ),
   );
 };
 
 /**
  * Find locations by ISO 3166-1 alpha-2 or alpha-3 code. Case-insensitive.
  */
-export const findLocationsByCountryIso = (code: string): Location[] => {
+export const findLocationsByCountryIso = (code: string): ReadonlyArray<Location> => {
   if (typeof code !== 'string') {
-    return [];
+    return EMPTY_LOCATIONS;
   }
   const upper = code.toUpperCase();
   const { valid, iso2 } = isValidCountryIso(upper);
   if (!valid) {
-    return [];
+    return EMPTY_LOCATIONS;
   }
   return (iso2 ? locationsByIso2.get(upper) : locationsByIso3.get(upper)) ?? EMPTY_LOCATIONS;
 };
@@ -71,25 +78,27 @@ export const findLocationsByCountryIso = (code: string): Location[] => {
 export const findLocationsByCountryName = (
   name: string,
   partialMatch: boolean = false,
-): Location[] => {
+): ReadonlyArray<Location> => {
   if (typeof name !== 'string') {
-    return [];
+    return EMPTY_LOCATIONS;
   }
   if (partialMatch === true) {
-    return locations.filter(
-      (location) =>
-        match({
-          partial: true,
-          source: location.country.name,
-          compare: name,
-          strict: false,
-        }) ||
-        match({
-          partial: true,
-          source: location.country.officialName,
-          compare: name,
-          strict: false,
-        }),
+    return freezeArray(
+      locations.filter(
+        (location) =>
+          match({
+            partial: true,
+            source: location.country.name,
+            compare: name,
+            strict: false,
+          }) ||
+          match({
+            partial: true,
+            source: location.country.officialName,
+            compare: name,
+            strict: false,
+          }),
+      ),
     );
   }
   const lower = name.toLowerCase();
@@ -107,18 +116,20 @@ export const findLocationsByCountryName = (
 export const findLocationsByProvince = (
   name: string,
   partialMatch: boolean = false,
-): Location[] => {
+): ReadonlyArray<Location> => {
   if (typeof name !== 'string') {
-    return [];
+    return EMPTY_LOCATIONS;
   }
   if (partialMatch === true) {
-    return locations.filter((location) =>
-      match({
-        partial: true,
-        source: location.province,
-        compare: name,
-        strict: false,
-      }),
+    return freezeArray(
+      locations.filter((location) =>
+        match({
+          partial: true,
+          source: location.province,
+          compare: name,
+          strict: false,
+        }),
+      ),
     );
   }
   return locationsByLowerProvince.get(name.toLowerCase()) ?? EMPTY_LOCATIONS;
@@ -127,18 +138,23 @@ export const findLocationsByProvince = (
 /**
  * Find locations by USPS state name or code (US only). Case-insensitive.
  */
-export const findLocationsByState = (name: string, partialMatch: boolean = false): Location[] => {
+export const findLocationsByState = (
+  name: string,
+  partialMatch: boolean = false,
+): ReadonlyArray<Location> => {
   if (typeof name !== 'string') {
-    return [];
+    return EMPTY_LOCATIONS;
   }
   if (partialMatch === true) {
-    return locations.filter((location) =>
-      match({
-        partial: true,
-        source: location.state,
-        compare: name,
-        strict: false,
-      }),
+    return freezeArray(
+      locations.filter((location) =>
+        match({
+          partial: true,
+          source: location.state,
+          compare: name,
+          strict: false,
+        }),
+      ),
     );
   }
   return locationsByLowerState.get(name.toLowerCase()) ?? EMPTY_LOCATIONS;
@@ -147,4 +163,4 @@ export const findLocationsByState = (name: string, partialMatch: boolean = false
 /**
  * All locations, sorted by city name ascending.
  */
-export const getLocations = (): Location[] => locations;
+export const getLocations = (): ReadonlyArray<Location> => locations;

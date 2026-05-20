@@ -51,4 +51,4 @@ export const findStateAnsiByUspsCode = (code: string): StateAnsi | undefined => 
 /**
  * All US states (ANSI), sorted by name ascending.
  */
-export const getStatesAnsi = (): StateAnsi[] => statesAnsi;
+export const getStatesAnsi = (): ReadonlyArray<StateAnsi> => statesAnsi;

@@ -11,19 +11,23 @@ export function is(Type: typeof Number, thing: unknown): thing is number;
 export function is(Type: typeof Boolean, thing: unknown): thing is boolean;
 export function is<T>(Type: new (...args: never[]) => T, thing: unknown): thing is T;
 export function is(Type: unknown, thing: unknown): boolean {
-  if (!exists(Type) || !exists(thing)) {
-    return false;
+  if (Type === String) {
+    return typeof thing === 'string';
   }
-
-  if ((thing as { constructor?: unknown }).constructor === Type) {
-    return true;
+  if (Type === Number) {
+    return typeof thing === 'number' && !Number.isNaN(thing);
   }
-
-  return typeof Type === 'function' && thing instanceof (Type as new (...args: never[]) => unknown);
+  if (Type === Boolean) {
+    return typeof thing === 'boolean';
+  }
+  if (typeof Type === 'function' && exists(thing)) {
+    return thing instanceof (Type as new (...args: never[]) => unknown);
+  }
+  return false;
 }
 
 export function hasLen({ str, from, to }: { str: string; from: number; to: number }): boolean {
-  if (!is(String, str)) {
+  if (typeof str !== 'string') {
     return false;
   }
 
@@ -48,7 +52,7 @@ export function match({
   partial?: boolean;
   strict?: boolean;
 }): boolean {
-  if (!is(String, source) || !is(String, compare)) {
+  if (typeof source !== 'string' || typeof compare !== 'string') {
     return false;
   }
 

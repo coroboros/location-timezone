@@ -51,38 +51,40 @@ export const findTimezoneByCityName = (name: string): string | undefined => {
   return locationByCityLowerName.get(name.toLowerCase())?.timezone;
 };
 
+const EMPTY_TIMEZONES: ReadonlyArray<string> = Object.freeze([]);
+
 /**
  * All IANA timezones for a country, by ISO 3166-1 alpha-2 or alpha-3 code.
  * Case-insensitive.
  */
-export const findTimezonesByCountryIso = (code: string): string[] => {
+export const findTimezonesByCountryIso = (code: string): ReadonlyArray<string> => {
   if (typeof code !== 'string') {
-    return [];
+    return EMPTY_TIMEZONES;
   }
   const upper = code.toUpperCase();
   const { valid, iso2 } = isValidCountryIso(upper);
   if (!valid) {
-    return [];
+    return EMPTY_TIMEZONES;
   }
   const country = iso2 ? countryByIso2.get(upper) : countryByIso3.get(upper);
-  return country?.timezones ?? [];
+  return country?.timezones ?? EMPTY_TIMEZONES;
 };
 
 /**
  * All IANA timezones for a country, by country short or official name.
  * Case-insensitive.
  */
-export const findTimezonesByCountryName = (name: string): string[] => {
+export const findTimezonesByCountryName = (name: string): ReadonlyArray<string> => {
   if (typeof name !== 'string') {
-    return [];
+    return EMPTY_TIMEZONES;
   }
   const lower = name.toLowerCase();
   const country = countryByLowerName.get(lower) ?? countryByLowerOfficialName.get(lower);
-  return country?.timezones ?? [];
+  return country?.timezones ?? EMPTY_TIMEZONES;
 };
 
 /**
  * All IANA timezones (the subset returned by `Intl.supportedValuesOf('timeZone')`
  * at data-build time), sorted ascending.
  */
-export const getTimezones = (): string[] => timezones;
+export const getTimezones = (): ReadonlyArray<string> => timezones;

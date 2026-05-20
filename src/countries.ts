@@ -85,12 +85,12 @@ export const findCountryByName = (name: string): Country | undefined => {
 /**
  * All country capitals, sorted by country name ascending.
  */
-export const getCapitals = (): Capital[] => countryCapitals;
+export const getCapitals = (): ReadonlyArray<Capital> => countryCapitals;
 
 /**
  * All countries, sorted by country name ascending.
  */
-export const getCountries = (): Country[] => countries;
+export const getCountries = (): ReadonlyArray<Country> => countries;
 
 /**
  * Get the ISO 3166-1 alpha-2 code paired with an alpha-3 code. Case-insensitive.
@@ -105,7 +105,7 @@ export const getCountryIso2CodeByIso3 = (iso3: string): string | undefined => {
 /**
  * All ISO 3166-1 alpha-2 codes, sorted ascending.
  */
-export const getCountryIso2Codes = (): string[] => countryIso2Codes;
+export const getCountryIso2Codes = (): ReadonlyArray<string> => countryIso2Codes;
 
 /**
  * Get the ISO 3166-1 alpha-3 code paired with an alpha-2 code. Case-insensitive.
@@ -120,7 +120,7 @@ export const getCountryIso3CodeByIso2 = (iso2: string): string | undefined => {
 /**
  * All ISO 3166-1 alpha-3 codes, sorted ascending.
  */
-export const getCountryIso3Codes = (): string[] => countryIso3Codes;
+export const getCountryIso3Codes = (): ReadonlyArray<string> => countryIso3Codes;
 
 /**
  * Validate an ISO 3166-1 alpha-2 or alpha-3 code. **Case-sensitive** — codes
