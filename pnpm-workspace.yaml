@@ -1,3 +1,5 @@
+allowBuilds:
+  esbuild: true
 minimumReleaseAgeExclude:
   - '@vitest/coverage-v8@4.1.7'
   - '@vitest/expect@4.1.7'
