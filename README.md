@@ -28,6 +28,7 @@ Curated UN country names, CIA Factbook official forms, ISO 3166-1 codes, ANSI FI
 - [API](#api)
 - [Subpath exports](#subpath-exports)
 - [Limitations](#limitations)
+- [Compared to alternatives](#compared-to-alternatives)
 - [Contributing](#contributing)
 - [License](#license)
 
@@ -915,6 +916,21 @@ Sizes include the chunked dependencies each subpath transitively pulls. The merg
 - **Non-ISO codes** — Northern Cyprus (`XC`/`CYN`), Kosovo (`XK`/`KOS`), and Somaliland (`XS`/`SOL`) use synthesized codes outside ISO 3166-1.
 - **Timezone set is snapshot** — IANA timezones are captured once when the data is rebuilt; the runtime does not re-query `Intl`. Rebuild and republish on tz-database changes.
 - **No reverse geocoding** — `findLocationsByCoordinates` filters a bounding box; it does not return the nearest city.
+
+## Compared to alternatives
+
+| Feature                                              | `i18n-iso-countries` | `countries-list` |     `geo-tz`      |  `city-timezones`   | **`@coroboros/location-timezone`** |
+| ---------------------------------------------------- | :------------------: | :--------------: | :---------------: | :-----------------: | :--------------------------------: |
+| Country names with UN + CIA official forms           | no                   | no               | no                | no                  | yes                                |
+| ISO 3166-1 alpha-2 / alpha-3 codes                   | yes                  | yes              | no                | yes                 | yes                                |
+| Capital data with coordinates + IANA timezone        | no                   | no (name only)   | no                | no                  | yes                                |
+| US state codes — ANSI FIPS + USPS                    | no                   | no               | no                | USPS only           | yes                                |
+| City data with coordinates                           | no                   | no               | no                | ~7,300              | ~40,000                            |
+| Timezone lookup by city name                         | no                   | no               | no (lat/lng only) | yes (O(n) scan)     | yes (O(1) Map)                     |
+| Cross-references resolved across domains             | no                   | no               | n/a               | no                  | yes                                |
+| Runtime dependencies                                 | 1                    | 0                | 4                 | 0                   | 1 (`zipson`)                       |
+
+The consolidation is the differentiator. Country-only packages (`i18n-iso-countries`, `countries-list`) cover ISO codes and names, nothing else. `geo-tz` and `tz-lookup` solve a different input model: lat/lng polygon → timezone, useful when you only know coordinates. `city-timezones` is the closest peer in shape, resolving country and timezone from a city name. It carries ~7,300 cities with no capitals or state-FIPS codes, and runs every lookup through `Array.filter`. `@coroboros/location-timezone` carries all five domains: countries, capitals, ~40,000 cities, US states ANSI, IANA timezones. The library builds Map and Set indexes once at module load. Cross-references resolve at parse time, so `findCapitalOfCountryIso('JP').country` returns the same object as `findCountryByIso('JP')`.
 
 ## Contributing
 
