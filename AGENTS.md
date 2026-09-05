@@ -46,6 +46,7 @@ Lookup helpers for capitals, countries, cities, ANSI states (USA), and IANA time
 
 ## Rules
 
+- Keep public artifacts free of private rule paths, local machine paths, and internal tooling.
 - **NEVER** break the public API above. Signatures, return shapes, and `undefined`/`[]` "not found" semantics are the 1.0.0 contract.
 - **NEVER** add a runtime dependency beyond `zipson` without user approval.
 - **NEVER** use `axios`, `request`, or `node-fetch` — use native `fetch` (Node 22+).
