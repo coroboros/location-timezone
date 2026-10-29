@@ -8,11 +8,11 @@ Capital, country, city, ANSI state and IANA timezone lookups for Node.js 22+.
 - Returned data and lookup buckets are frozen shared references. Missing string fields use `''`, not `null` or `undefined`.
 - `zipson` is the sole runtime dependency; additions require user approval. Use native `fetch`. Keep `country-locale-map` confined to data scripts and `joi` to tests, both as development dependencies.
 - Regenerate compressed `src/data/*.json` with `pnpm build:data`; do not edit the payloads manually. Data scripts are excluded from the shipped package, Biome and the TypeScript project.
-- Preserve the public scoped package and dual ESM/CJS exports. Keep public artifacts free of private paths and infrastructure references.
+- Preserve the public scoped package and dual ESM/CJS exports.
 
 ## Validation
 
-Use the scripts in `package.json`. Source or dependency changes require `pnpm lint`, `pnpm typecheck`, `pnpm test` and `pnpm build`; documentation-only edits need Markdown and reference checks.
+Source or dependency changes require `pnpm lint`, `pnpm typecheck`, `pnpm test` and `pnpm build`.
 
 For query-helper or data-layer changes, run `pnpm bench` against the bucket budgets in `bench/baseline.md`. Reuse passing results while the tested inputs remain unchanged.
 
